@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thư Viện trường X</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(15, 32, 67, 0.82), rgba(30, 58, 138, 0.82)),
+                        url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: #173b73;
+            text-align: center;
+        }
+
+        .loading {
+            background: rgba(255, 255, 255, 0.96);
+            padding: 32px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .loading h1 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .loading p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .loading a {
+            color: #173b73;
+            font-weight: 600;
+        }
+    </style>
+    <script>
+        // index.html chỉ là cổng vào: điều hướng về đúng giao diện đăng nhập/trang chủ.
+        (function () {
+            var dich = "giaodienđnhap.html";
+            try {
+                if (localStorage.getItem("currentUser")) {
+                    dich = "trangchu.html";
+                }
+            } catch (e) {
+                // localStorage bị chặn thì vẫn về trang đăng nhập
+            }
+            window.location.replace(dich);
+        })();
+    </script>
+</head>
+
+<body>
+    <div class="loading">
+        <h1>Thư Viện trường X</h1>
+        <p>Đang chuyển hướng... Nếu trình duyệt không tự chuyển,
+            <a href="giaodienđnhap.html">bấm vào đây</a>.
+        </p>
+    </div>
+</body>
+
+
+</html>

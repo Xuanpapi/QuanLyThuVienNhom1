@@ -1,0 +1,6 @@
+FROM postgres:16-alpine
+
+COPY database/create_postSQL.sql /docker-entrypoint-initdb.d/01-create.sql
+COPY database/insert_postgreSQL.sql /docker-entrypoint-initdb.d/02-insert.sql
+
+CMD ["sh", "-c", "until pg_isready -h \"$DB_SERVER\" -U \"$DB_USER\" -d \"$DB_NAME\"; do sleep 2; done; PGPASSWORD=\"$DB_PASSWORD\" psql -v ON_ERROR_STOP=1 -h \"$DB_SERVER\" -U \"$DB_USER\" -d \"$DB_NAME\" -f /docker-entrypoint-initdb.d/01-create.sql && PGPASSWORD=\"$DB_PASSWORD\" psql -v ON_ERROR_STOP=1 -h \"$DB_SERVER\" -U \"$DB_USER\" -d \"$DB_NAME\" -f /docker-entrypoint-initdb.d/02-insert.sql"]

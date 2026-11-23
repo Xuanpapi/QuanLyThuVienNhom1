@@ -1,12 +1,29 @@
 package com.example.backend.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 public class DangKyRequest {
+    @NotBlank(message = "Mã sinh viên không được để trống")
     private String ma_sv;
+
+    @NotBlank(message = "Email không được để trống")
+    @Email(message = "Email không hợp lệ")
     private String email;
+
+    @NotBlank(message = "Mật khẩu không được để trống")
     private String mat_khau;
+
+    @NotBlank(message = "Họ tên không được để trống")
     private String ho_ten;
+
+    @NotBlank(message = "Lớp không được để trống")
     private String lop;
+
+    @NotBlank(message = "Số điện thoại không được để trống")
     private String sdt;
+
+    @NotBlank(message = "Khoa không được để trống")
     private String khoa;
 
     public DangKyRequest() {

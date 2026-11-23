@@ -1,0 +1,4019 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ - Thư Viện trường X</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f8fafc;
+            color: #1f2937;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: #173b73;
+            color: white;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand span.icon {
+            font-size: 28px;
+        }
+
+        .brand h1 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .user-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-welcome {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .btn-logout {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+
+        .btn-logout:hover {
+            background: #c0392b;
+        }
+
+        /* Navigation Menu Tabs */
+        .nav-tabs {
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            flex-wrap: wrap;
+        }
+
+        .nav-tab-btn {
+            background: transparent;
+            border: none;
+            padding: 15px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #64748b;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-tab-btn:hover {
+            color: #173b73;
+        }
+
+        .nav-tab-btn.active {
+            color: #173b73;
+            border-bottom-color: #173b73;
+            background: #f8fafc;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(rgba(23, 59, 115, 0.85), rgba(23, 59, 115, 0.85)),
+                        url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1920&q=80') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .hero-banner h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .hero-banner p {
+            font-size: 15px;
+            opacity: 0.9;
+            max-width: 600px;
+            line-height: 1.5;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #173b73;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Cards & Grid */
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .info-item {
+            background: #f8fafc;
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 4px solid #173b73;
+        }
+
+        .info-item label {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: #64748b;
+            margin-bottom: 6px;
+        }
+
+        .info-item span {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        /* Book Grid */
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .book-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .book-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+        }
+
+        .book-thumb {
+            position: relative;
+            height: 140px;
+            background: linear-gradient(135deg, #173b73, #2563eb);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .book-thumb-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Ảnh tải được thì ẩn nhãn chữ; ảnh lỗi bị remove() nên nhãn hiện lại */
+        .book-thumb-img + .book-thumb-label {
+            display: none;
+        }
+
+        .book-thumb-label {
+            position: relative;
+            z-index: 1;
+        }
+
+        .book-detail-cover {
+            position: relative;
+            flex: 0 0 auto;
+            width: 110px;
+            height: 156px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #173b73, #2563eb);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+        }
+
+        .book-detail-fallback {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .book-detail-cover img {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .book-body {
+            padding: 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .book-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+
+        .book-code {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .book-desc {
+            font-size: 13px;
+            color: #475569;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        /* Modal Book Detail */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-overlay.show {
+            display: flex;
+        }
+        .modal-card {
+            background: white;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+            animation: modalFadeIn 0.3s ease;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modal-header {
+            background: #173b73;
+            color: white;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-body {
+            padding: 24px;
+            max-height: 75vh;
+            overflow-y: auto;
+        }
+        .modal-footer {
+            padding: 12px 20px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            text-align: right;
+        }
+        .btn-close {
+            background: #e2e8f0;
+            color: #334155;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-detail {
+            width: 100%;
+            background: #e0e7ff;
+            color: #1d4ed8;
+            border: none;
+            padding: 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 8px;
+        }
+        .btn-detail:hover {
+            background: #c7d2fe;
+        }
+
+        /* Search Bar */
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: #173b73;
+            box-shadow: 0 0 0 3px rgba(23, 59, 115, 0.1);
+        }
+
+        .search-box button {
+            padding: 0 24px;
+            background: #173b73;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .search-box button:hover {
+            background: #234f94;
+        }
+
+        /* History Table / Cards */
+        .history-card {
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            margin-bottom: 16px;
+            padding: 20px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.02);
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+        }
+
+        .badge {
+            display: inline-block;
+            white-space: nowrap;
+            line-height: 1.2;
+            vertical-align: middle;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .badge-borrowing {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .badge-returned {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-pending {
+            background: #e0f2fe;
+            color: #0284c7;
+        }
+
+        .badge-overdue {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .badge-rejected {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .thong-bao-badge {
+            display: inline-block;
+            background: #dc2626;
+            color: #ffffff;
+            border-radius: 999px;
+            padding: 1px 7px;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-left: 4px;
+            vertical-align: middle;
+        }
+
+        .btn-admin {
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .admin-filter {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+
+        .admin-filter select,
+        .admin-filter input {
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .admin-filter select:focus,
+        .admin-filter input:focus {
+            border-color: #173b73;
+            box-shadow: 0 0 0 3px rgba(23, 59, 115, 0.1);
+        }
+
+        .admin-table-wrap {
+            overflow-x: auto;
+        }
+
+        .lp-book-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            background: #f8fafc;
+        }
+
+        .lp-copy-panel {
+            margin-top: 12px;
+        }
+
+        .book-list-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        .book-list-table th, .book-list-table td {
+            text-align: left;
+            padding: 8px 12px;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: middle;
+        }
+
+        .book-list-table th {
+            color: #64748b;
+            font-weight: 600;
+            background: #f8fafc;
+        }
+
+        /* Phân trang danh sách người dùng */
+        .pagination {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+            font-size: 13px;
+            color: #475569;
+        }
+
+        .pagination button {
+            border: 1px solid #cbd5e1;
+            background: #ffffff;
+            color: #334155;
+            min-width: 34px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            border-color: #173b73;
+            color: #173b73;
+        }
+
+        .pagination button.active {
+            background: #173b73;
+            border-color: #173b73;
+            color: #ffffff;
+        }
+
+        .pagination button:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        .pagination .page-info {
+            margin-left: auto;
+            color: #64748b;
+        }
+
+        /* Quản lý danh mục & thể loại */
+        .meta-two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 26px;
+        }
+
+        .meta-col-title {
+            font-size: 14px;
+            color: #173b73;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .meta-form-actions {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .btn-meta-primary {
+            background: #173b73;
+            color: #ffffff;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .btn-meta-secondary {
+            background: #e2e8f0;
+            color: #334155;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 800px) {
+            .meta-two-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #64748b;
+        }
+
+        .empty-state .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        /* Form Thêm Sách (Dành cho Thủ thư) */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group.full {
+            grid-column: span 2;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 13px;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #173b73;
+            box-shadow: 0 0 0 3px rgba(23, 59, 115, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="brand">
+            <span class="icon">🏛️</span>
+            <h1>Thư Viện trường X</h1>
+        </div>
+        <div class="user-nav">
+            <span class="user-welcome" id="headerName">Xin chào, Đọc giả</span>
+            <button class="btn-logout" onclick="logout()">Đăng xuất</button>
+        </div>
+    </header>
+
+    <div class="nav-tabs" id="navTabsContainer">
+        <button class="nav-tab-btn active" onclick="switchTab('home')">Trang Chủ & Đề Xuất</button>
+        <button class="nav-tab-btn" onclick="switchTab('profile')">Hồ Sơ Cá Nhân</button>
+        <button class="nav-tab-btn" onclick="switchTab('history')">Lịch Sử Mượn Sách</button>
+        <button class="nav-tab-btn" onclick="switchTab('thongBao')">🔔 Thông Báo <span id="thongBaoBadge" class="thong-bao-badge" style="display: none;">0</span></button>
+        <button class="nav-tab-btn admin-only" onclick="switchTab('addBook')">➕ Thêm Sách (Thủ thư)</button>
+        <button class="nav-tab-btn admin-only" onclick="switchTab('quanLySach')">📖 Quản Lý Sách</button>
+        <button class="nav-tab-btn admin-only" onclick="switchTab('danhMuc')">🗂 Danh Mục &amp; Thể Loại</button>
+        <button class="nav-tab-btn admin-only" onclick="switchTab('lapPhieu')">📝 Lập Phiếu Mượn</button>
+        <button class="nav-tab-btn admin-only" onclick="switchTab('quanLyMuon')">📚 Quản Lý Mượn – Trả</button>
+        <button class="nav-tab-btn admin-only" onclick="switchTab('quaHan')">⏰ Sách Quá Hạn</button>
+        <button class="nav-tab-btn admin-only" onclick="switchTab('phieuPhat')">💰 Phiếu Phạt</button>
+        <button class="nav-tab-btn admin-only" onclick="switchTab('quanLyNguoiDung')">👥 Quản Lý Người Dùng</button>
+    </div>
+
+    <div class="main-container">
+
+        <!-- TAB 1: TRANG CHỦ & ĐỀ XUẤT -->
+        <div id="tabHome" class="tab-content active">
+            <div class="hero-banner">
+                <h2 id="welcomeTitle">Chào mừng bạn đến với Thư Viện trường X</h2>
+                <p>Khám phá kho tàng tri thức với hàng ngàn đầu sách chuyên ngành, công nghệ, văn học và kỹ năng phục vụ học tập, nghiên cứu.</p>
+            </div>
+
+            <div class="card" style="margin-bottom: 30px;">
+                <div class="section-title">🔍 Tra cứu nhanh đầu sách</div>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Nhập tên sách, mã sách hoặc tác giả cần tìm...">
+                    <button onclick="searchBooks()">Tìm kiếm</button>
+                </div>
+                <div id="searchResults" style="display: none;"></div>
+            </div>
+
+            <div class="section-title">💡 Sách đề xuất cho bạn</div>
+            <div class="books-grid" id="suggestedBooksGrid">
+                <!-- Rendered dynamically -->
+            </div>
+        </div>
+
+        <!-- TAB 2: HỒ SƠ CÁ NHÂN -->
+        <div id="tabProfile" class="tab-content">
+            <div class="card">
+                <div class="section-title">👤 Thông tin chi tiết độc giả</div>
+                <div class="info-grid" id="profileInfoGrid">
+                    <!-- Rendered dynamically -->
+                </div>
+            </div>
+            <div class="card" style="margin-top: 20px;">
+                <div class="section-title">⚙️ Cài đặt tài khoản</div>
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <button class="btn-detail" style="background: #2563eb; color: white; width: auto; padding: 10px 16px;" onclick="openChangePasswordModal()">🔑 Đổi mật khẩu</button>
+                    <button class="btn-detail" style="background: #0d9488; color: white; width: auto; padding: 10px 16px;" onclick="openChangeEmailModal()">✉️ Đổi Email</button>
+                    <button class="btn-detail" style="background: #d97706; color: white; width: auto; padding: 10px 16px;" onclick="openChangePhoneModal()">📱 Đổi Số điện thoại</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: LỊCH SỬ MƯỢN SÁCH -->
+        <div id="tabHistory" class="tab-content">
+            <div class="section-title">📖 Lịch sử phiếu mượn sách cá nhân</div>
+            <div id="historyContainer">
+                <!-- Rendered dynamically -->
+            </div>
+        </div>
+
+        <!-- TAB: THÔNG BÁO / CẢNH BÁO -->
+        <div id="tabThongBao" class="tab-content">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+                    <div class="section-title" style="margin-bottom: 0;">🔔 Thông báo từ thư viện</div>
+                    <button type="button" onclick="danhDauTatCaThongBao()"
+                        style="background: #e2e8f0; color: #334155; border: none; padding: 9px 16px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer;">Đánh dấu tất cả đã đọc</button>
+                </div>
+                <p id="thongBaoTomTat" style="color: #64748b; font-size: 13px; margin: 12px 0 16px;"></p>
+                <div id="thongBaoContainer"></div>
+            </div>
+        </div>
+
+        <!-- TAB 4: THÊM SÁCH (Dành riêng cho Thủ thư) -->
+        <div id="tabAddBook" class="tab-content admin-only">
+            <div class="card">
+                <div class="section-title">➕ Thêm Đầu Sách Mới (Thủ Thư)</div>
+                <form id="addBookForm" onsubmit="submitAddBook(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Mã sách *</label>
+                            <input type="text" id="addMaSach" placeholder="VD: S002" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tên sách *</label>
+                            <input type="text" id="addTenSach" placeholder="VD: Nhập môn Trí tuệ nhân tạo" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Năm xuất bản</label>
+                            <input type="number" id="addNamXuatBan" placeholder="VD: 2024">
+                        </div>
+                        <div class="form-group">
+                            <label>Nhà xuất bản</label>
+                            <select id="addNhaXuatBanSelect">
+                                <option value="">-- Chọn Nhà xuất bản --</option>
+                            </select>
+                            <input type="text" id="addNhaXuatBanMoi" placeholder="Hoặc nhập tên nhà xuất bản mới..." style="margin-top: 8px;">
+                        </div>
+                        <div class="form-group">
+                            <label>Danh mục sách</label>
+                            <select id="addDanhMucSelect">
+                                <option value="">-- Chọn Danh mục --</option>
+                            </select>
+                            <input type="text" id="addDanhMucMoi" placeholder="Hoặc nhập tên danh mục mới..." style="margin-top: 8px;">
+                        </div>
+                        <div class="form-group">
+                            <label>Tác giả (Chọn từ danh sách hoặc nhập tên mới)</label>
+                            <select id="addTacGiaSelect">
+                                <option value="">-- Chọn Tác giả có sẵn --</option>
+                            </select>
+                            <input type="text" id="addTacGiaMoi" placeholder="Hoặc nhập tên tác giả mới..." style="margin-top: 8px;">
+                        </div>
+                        <div class="form-group">
+                            <label>Thể loại (Chọn từ danh sách hoặc nhập tên mới)</label>
+                            <select id="addTheLoaiSelect">
+                                <option value="">-- Chọn Thể loại có sẵn --</option>
+                            </select>
+                            <input type="text" id="addTheLoaiMoi" placeholder="Hoặc nhập tên thể loại mới..." style="margin-top: 8px;">
+                        </div>
+                        <div class="form-group full">
+                            <label>Mô tả sách</label>
+                            <textarea id="addMoTa" rows="3" placeholder="Nhập tóm tắt nội dung sách..."></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" style="background: #173b73; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 10px;">Lưu Đầu Sách Mới</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- TAB: QUẢN LÝ SÁCH (US 2.2.2 - Dành riêng cho Thủ thư) -->
+        <div id="tabQuanLySach" class="tab-content admin-only">
+            <div class="card">
+                <div class="section-title">📖 Danh sách đầu sách</div>
+                <div class="admin-filter">
+                    <input type="text" id="qlSachKeyword" placeholder="Tìm theo tên sách, mã sách, tác giả, thể loại..."
+                        style="flex: 1; min-width: 240px;"
+                        onkeydown="if (event.key === 'Enter') loadAdminSach()">
+                    <button type="button" onclick="loadAdminSach()"
+                        style="background: #173b73; color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer;">Tìm</button>
+                    <button type="button" onclick="resetTimSach()"
+                        style="background: #e2e8f0; color: #334155; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer;">Xóa lọc</button>
+                </div>
+                <div id="adminSachContainer"></div>
+            </div>
+        </div>
+
+        <!-- TAB: QUẢN LÝ DANH MỤC & THỂ LOẠI (US 2.2.3 - Dành riêng cho Thủ thư) -->
+        <div id="tabDanhMuc" class="tab-content admin-only">
+            <div class="card">
+                <div class="section-title">🗂 Quản lý danh mục &amp; thể loại sách</div>
+                <div class="meta-two-col">
+                    <div>
+                        <h4 class="meta-col-title">Danh mục sách</h4>
+                        <form id="danhMucForm" onsubmit="luuDanhMuc(event)">
+                            <input type="hidden" id="dmId">
+                            <div class="form-group">
+                                <label>Tên danh mục *</label>
+                                <input type="text" id="dmTen" placeholder="VD: Công nghệ thông tin" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Mô tả</label>
+                                <input type="text" id="dmMoTa" placeholder="Không bắt buộc">
+                            </div>
+                            <div class="meta-form-actions">
+                                <button type="submit" id="dmSubmitBtn" class="btn-meta-primary">Thêm danh mục</button>
+                                <button type="button" id="dmCancelBtn" class="btn-meta-secondary" style="display: none;" onclick="huySuaDanhMuc()">Huỷ sửa</button>
+                            </div>
+                        </form>
+                        <div id="danhMucTable"></div>
+                    </div>
+                    <div>
+                        <h4 class="meta-col-title">Thể loại sách</h4>
+                        <form id="theLoaiForm" onsubmit="luuTheLoai(event)">
+                            <input type="hidden" id="tlId">
+                            <div class="form-group">
+                                <label>Tên thể loại *</label>
+                                <input type="text" id="tlTen" placeholder="VD: Khoa học máy tính" required>
+                            </div>
+                            <div class="meta-form-actions">
+                                <button type="submit" id="tlSubmitBtn" class="btn-meta-primary">Thêm thể loại</button>
+                                <button type="button" id="tlCancelBtn" class="btn-meta-secondary" style="display: none;" onclick="huySuaTheLoai()">Huỷ sửa</button>
+                            </div>
+                        </form>
+                        <div id="theLoaiTable"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 5: LẬP PHIẾU MƯỢN (Dành riêng cho Thủ thư) -->
+        <div id="tabLapPhieuMuon" class="tab-content admin-only">
+            <div class="card">
+                <div class="section-title">📝 Lập phiếu mượn sách (Thủ thư)</div>
+                <form id="lapPhieuForm" onsubmit="submitLapPhieuMuon(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Độc giả *</label>
+                            <select id="lpDocGia" required>
+                                <option value="">-- Chọn độc giả --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Hạn trả *</label>
+                            <input type="date" id="lpHanTra" required>
+                        </div>
+                        <div class="form-group full">
+                            <label>Tìm đầu sách</label>
+                            <div class="search-box" style="margin-bottom: 10px;">
+                                <input type="text" id="lpSearchSach" placeholder="Nhập tên sách, mã sách hoặc tác giả...">
+                                <button type="button" onclick="searchSachForBorrow()">Tìm kiếm</button>
+                            </div>
+                            <div id="lpSearchResults"></div>
+                            <div id="lpCopyPanel" class="lp-copy-panel"></div>
+                        </div>
+                    </div>
+
+                    <div style="margin: 18px 0 8px; font-weight: 700; color: #1e293b;">
+                        Cuốn sách đã chọn (<span id="lpSelectedCount">0</span>)
+                    </div>
+                    <div id="lpSelectedCopies"></div>
+
+                    <button type="submit" style="background: #173b73; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 14px;">Tạo phiếu mượn</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- TAB 6: QUẢN LÝ MƯỢN - TRẢ (Dành riêng cho Thủ thư) -->
+        <div id="tabQuanLyMuon" class="tab-content admin-only">
+            <div class="card">
+                <div class="section-title">📚 Quản lý phiếu mượn – trả</div>
+                <div class="admin-filter">
+                    <select id="qlTrangThai" onchange="loadAdminPhieuMuon()">
+                        <option value="">Tất cả trạng thái</option>
+                        <option value="CHO_DUYET">Chờ duyệt</option>
+                        <option value="DANG_MUON">Đang mượn</option>
+                        <option value="DA_TRA">Đã trả</option>
+                        <option value="TU_CHOI">Từ chối</option>
+                        <option value="DA_HUY">Đã huỷ</option>
+                    </select>
+                    <input type="text" id="qlKeyword" placeholder="Tìm theo tên độc giả, mã thẻ, mã phiếu..." onkeydown="if (event.key === 'Enter') loadAdminPhieuMuon()" style="flex: 1; min-width: 240px;">
+                    <button type="button" onclick="loadAdminPhieuMuon()" style="background: #173b73; color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer;">Lọc</button>
+                </div>
+                <div id="adminPhieuMuonContainer"></div>
+            </div>
+        </div>
+
+        <!-- TAB: SÁCH QUÁ HẠN (US 3.2.2 - Dành riêng cho Thủ thư) -->
+        <div id="tabQuaHan" class="tab-content admin-only">
+            <div class="card">
+                <div class="section-title">⏰ Danh sách phiếu mượn quá hạn</div>
+                <div class="admin-filter">
+                    <input type="text" id="qhKeyword" placeholder="Tìm theo tên độc giả, mã thẻ, mã phiếu..."
+                        style="flex: 1; min-width: 240px;"
+                        onkeydown="if (event.key === 'Enter') loadQuaHan()">
+                    <button type="button" onclick="loadQuaHan()"
+                        style="background: #173b73; color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer;">Lọc</button>
+                    <button type="button" onclick="resetQuaHan()"
+                        style="background: #e2e8f0; color: #334155; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer;">Xóa lọc</button>
+                    <button type="button" onclick="guiCanhBaoTatCa()"
+                        style="background: #f59e0b; color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer;">📧 Gửi tất cả cảnh báo</button>
+                </div>
+                <div id="quaHanContainer"></div>
+            </div>
+        </div>
+
+        <!-- TAB: PHIẾU PHẠT (US 3.2.3 - Dành riêng cho Thủ thư) -->
+        <div id="tabPhieuPhat" class="tab-content admin-only">
+            <div class="card">
+                <div class="section-title">💰 Quản lý phiếu phạt</div>
+                <div id="phieuPhatTongQuan" style="margin-bottom: 14px;"></div>
+                <div class="admin-filter">
+                    <input type="text" id="ppKeyword" placeholder="Tìm theo độc giả, mã thẻ, lý do, mã phiếu..."
+                        style="flex: 1; min-width: 240px;"
+                        onkeydown="if (event.key === 'Enter') loadPhieuPhat()">
+                    <select id="ppTrangThai" onchange="loadPhieuPhat()"
+                        style="padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; background: white;">
+                        <option value="">Tất cả trạng thái</option>
+                        <option value="CHUA_THANH_TOAN">Chưa thanh toán</option>
+                        <option value="DA_THANH_TOAN">Đã thanh toán</option>
+                    </select>
+                    <button type="button" onclick="loadPhieuPhat()"
+                        style="background: #173b73; color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer;">Lọc</button>
+                    <button type="button" onclick="resetLocPhieuPhat()"
+                        style="background: #e2e8f0; color: #334155; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer;">Xóa lọc</button>
+                    <button type="button" onclick="moModalGhiPhat()"
+                        style="background: #16a34a; color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer;">+ Ghi phạt</button>
+                </div>
+                <div id="phieuPhatContainer"></div>
+            </div>
+        </div>
+
+        <!-- TAB 7: QUẢN LÝ NGƯỜI DÙNG (Dành riêng cho Thủ thư) -->
+        <div id="tabQuanLyNguoiDung" class="tab-content admin-only">
+            <div class="card">
+                <div class="section-title">👥 Quản lý tài khoản người dùng</div>
+
+                <div class="admin-filter">
+                    <input type="text" id="ndKeyword" placeholder="Tìm theo họ tên, email, mã SV, SĐT..."
+                        style="flex: 1; min-width: 240px;"
+                        onkeydown="if (event.key === 'Enter') loadAdminNguoiDung(0)">
+                    <select id="ndVaiTro" onchange="loadAdminNguoiDung(0)">
+                        <option value="">Tất cả vai trò</option>
+                    </select>
+                    <select id="ndTrangThai" onchange="loadAdminNguoiDung(0)">
+                        <option value="">Tất cả trạng thái</option>
+                        <option value="true">Hoạt động</option>
+                        <option value="false">Đã khóa</option>
+                    </select>
+                    <button type="button" onclick="loadAdminNguoiDung(0)"
+                        style="background: #173b73; color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer;">Lọc</button>
+                    <button type="button" onclick="resetBoLocNguoiDung()"
+                        style="background: #e2e8f0; color: #334155; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 600; cursor: pointer;">Xóa lọc</button>
+                </div>
+
+                <div id="adminNguoiDungContainer"></div>
+                <div id="adminNguoiDungPagination" class="pagination"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Trang admin được serve từ :8080, còn trang đăng nhập ở :5500.
+        // localStorage không dùng chung giữa hai origin (khác port), nên
+        // KHÔNG thể dựa vào localStorage để kiểm tra đăng nhập ở đây.
+        // Luôn xác thực bằng session phía máy chủ.
+        let currentUser = null;
+
+        async function kiemTraPhienAdmin() {
+            try {
+                const res = await fetch("/api/users/phien", { credentials: "include" });
+                if (!res.ok) throw new Error("Chưa đăng nhập");
+                const data = await res.json();
+                if (String(data.vaiTro || "").toUpperCase() !== "QUAN_TRI") {
+                    throw new Error("Không có quyền truy cập");
+                }
+
+                currentUser = {
+                    id: data.nguoiDungId,
+                    ho_ten: data.hoTen || "Quản trị viên",
+                    vai_tro_id: { tenVaiTro: data.vaiTro }
+                };
+
+                // Bổ sung email/mã để các luồng hồ sơ và đổi email hoạt động đầy đủ
+                try {
+                    const resProfile = await fetch(`/api/users/profile/${data.nguoiDungId}`, { credentials: "include" });
+                    if (resProfile.ok) {
+                        const profile = await resProfile.json();
+                        currentUser.email = profile.email || "";
+                        currentUser.ma_sv = profile.ma_sv || "";
+                        currentUser.ho_ten = profile.ho_ten || currentUser.ho_ten;
+                    }
+                } catch (_) { /* không bắt buộc */ }
+
+                // Lưu lại cho các lần mở sau (chỉ có tác dụng trong origin :8080)
+                localStorage.setItem("currentUser", JSON.stringify(currentUser));
+
+                document.getElementById("headerName").innerText = "Xin chào, " + (currentUser.ho_ten || "Đọc giả");
+                document.getElementById("welcomeTitle").innerText = "Chào mừng, " + (currentUser.ho_ten || "Đọc giả") + "!";
+                checkThuThuRole();
+                capNhatBadgeThongBaoTuServer();
+            } catch (e) {
+                window.location.href = "__LOGIN_URL__";
+            }
+        }
+
+        kiemTraPhienAdmin();
+
+        // ─────────────────────────────────────────────────────────────
+        // PHÂN QUYỀN: chỉ tài khoản QUAN_TRI mới thấy các tab thủ thư
+        // ─────────────────────────────────────────────────────────────
+        function getTenVaiTro() {
+            if (!currentUser) return "";
+            const vaiTro = currentUser.vai_tro_id || currentUser.vaiTro || currentUser.vai_tro;
+            if (!vaiTro) return "";
+            return vaiTro.tenVaiTro || vaiTro.ten_vai_tro || "";
+        }
+
+        function laThuThu() {
+            return getTenVaiTro().trim().toUpperCase() === "QUAN_TRI";
+        }
+
+        function checkThuThuRole() {
+            const admin = laThuThu();
+            document.querySelectorAll('.admin-only').forEach(el => {
+                el.style.display = admin ? '' : 'none';
+            });
+        }
+
+        function switchTab(tabName) {
+            const nutDuocBam = window.event && window.event.target;
+
+            document.querySelectorAll('.nav-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+
+            if (nutDuocBam && nutDuocBam.classList && nutDuocBam.classList.contains('nav-tab-btn')) {
+                nutDuocBam.classList.add('active');
+            } else {
+                const nutTheoTen = Array.from(document.querySelectorAll('.nav-tab-btn'))
+                    .find(btn => (btn.getAttribute('onclick') || '').includes(`'${tabName}'`));
+                if (nutTheoTen) nutTheoTen.classList.add('active');
+            }
+
+            const mapTab = {
+                home: 'tabHome',
+                profile: 'tabProfile',
+                history: 'tabHistory',
+                thongBao: 'tabThongBao',
+                addBook: 'tabAddBook',
+                quanLySach: 'tabQuanLySach',
+                danhMuc: 'tabDanhMuc',
+                lapPhieu: 'tabLapPhieuMuon',
+                quanLyMuon: 'tabQuanLyMuon',
+                quaHan: 'tabQuaHan',
+                phieuPhat: 'tabPhieuPhat',
+                quanLyNguoiDung: 'tabQuanLyNguoiDung'
+            };
+
+            const tabEl = document.getElementById(mapTab[tabName]);
+            if (tabEl) tabEl.classList.add('active');
+
+            if (tabName === 'home') {
+                loadSuggestedBooks();
+            } else if (tabName === 'profile') {
+                loadProfile();
+            } else if (tabName === 'history') {
+                loadBorrowingHistory();
+            } else if (tabName === 'thongBao') {
+                loadThongBao();
+            } else if (tabName === 'addBook') {
+                loadMetadataForAddBook();
+            } else if (tabName === 'quanLySach') {
+                loadAdminSach();
+            } else if (tabName === 'danhMuc') {
+                loadDanhMucTable();
+                loadTheLoaiTable();
+            } else if (tabName === 'lapPhieu') {
+                loadLapPhieuData();
+            } else if (tabName === 'quanLyMuon') {
+                loadAdminPhieuMuon();
+            } else if (tabName === 'quaHan') {
+                loadQuaHan();
+            } else if (tabName === 'phieuPhat') {
+                loadPhieuPhat();
+            } else if (tabName === 'quanLyNguoiDung') {
+                loadVaiTroFilter();
+                loadAdminNguoiDung(0);
+            }
+        }
+
+        // Load Metadata cho form Thêm sách
+        async function loadMetadataForAddBook() {
+            try {
+                // Load NXB
+                const resNxb = await fetch("/api/metadata/nhaxuatban");
+                const nxbs = await resNxb.json();
+                const nxbSelect = document.getElementById("addNhaXuatBanSelect");
+                nxbSelect.innerHTML = '<option value="">-- Chọn Nhà xuất bản --</option>' + 
+                    nxbs.map(n => `<option value="${n.id}">${n.tenNhaXuatBan}</option>`).join('');
+
+                // Load Danh muc
+                const resDm = await fetch("/api/metadata/danhmuc");
+                const dms = await resDm.json();
+                const dmSelect = document.getElementById("addDanhMucSelect");
+                dmSelect.innerHTML = '<option value="">-- Chọn Danh mục --</option>' + 
+                    dms.map(d => `<option value="${d.id}">${d.tenDanhMuc}</option>`).join('');
+
+                // Load Tác giả
+                const resTg = await fetch("/api/metadata/tacgia");
+                const tgs = await resTg.json();
+                const tgSelect = document.getElementById("addTacGiaSelect");
+                tgSelect.innerHTML = '<option value="">-- Chọn Tác giả có sẵn --</option>' + 
+                    tgs.map(t => `<option value="${t.id}">${t.tenTacGia}</option>`).join('');
+
+                // Load Thể loại
+                const resTl = await fetch("/api/metadata/theloai");
+                const tls = await resTl.json();
+                const tlSelect = document.getElementById("addTheLoaiSelect");
+                tlSelect.innerHTML = '<option value="">-- Chọn Thể loại có sẵn --</option>' + 
+                    tls.map(th => `<option value="${th.id}">${th.tenTheLoai}</option>`).join('');
+
+            } catch (err) {
+                console.error("Lỗi tải metadata:", err);
+            }
+        }
+
+        // Submit Thêm Sách
+        async function submitAddBook(e) {
+            e.preventDefault();
+
+            const maSach = document.getElementById("addMaSach").value.trim();
+            const tenSach = document.getElementById("addTenSach").value.trim();
+            const namXuatBan = document.getElementById("addNamXuatBan").value ? parseInt(document.getElementById("addNamXuatBan").value) : null;
+            const nhaXuatBanId = document.getElementById("addNhaXuatBanSelect").value ? parseInt(document.getElementById("addNhaXuatBanSelect").value) : null;
+            const danhMucId = document.getElementById("addDanhMucSelect").value ? parseInt(document.getElementById("addDanhMucSelect").value) : null;
+            const moTa = document.getElementById("addMoTa").value.trim();
+
+            // Xử lý Tác giả (ưu tiên chọn sẵn ID, nếu không có xem có nhập tên mới không)
+            const selectedTacGiaId = document.getElementById("addTacGiaSelect").value;
+            const textTacGiaMoi = document.getElementById("addTacGiaMoi").value.trim();
+            let tacGias = [];
+            if (selectedTacGiaId) {
+                tacGias.push({ id: parseInt(selectedTacGiaId) });
+            } else if (textTacGiaMoi) {
+                tacGias.push({ tenTacGia: textTacGiaMoi });
+            }
+
+            // Xử lý Thể loại
+            const selectedTheLoaiId = document.getElementById("addTheLoaiSelect").value;
+            const textTheLoaiMoi = document.getElementById("addTheLoaiMoi").value.trim();
+            let theLoais = [];
+            if (selectedTheLoaiId) {
+                theLoais.push({ id: parseInt(selectedTheLoaiId) });
+            } else if (textTheLoaiMoi) {
+                theLoais.push({ tenTheLoai: textTheLoaiMoi });
+            }
+
+            const payload = {
+                maSach,
+                tenSach,
+                namXuatBan,
+                moTa,
+                tacGias,
+                theLoais
+            };
+
+            // Nhà xuất bản: ưu tiên ID chọn sẵn, nếu không thì gửi tên mới để backend auto-create
+            const nxbMoi = document.getElementById("addNhaXuatBanMoi").value.trim();
+            if (nhaXuatBanId) {
+                payload.nhaXuatBanId = nhaXuatBanId;
+            } else if (nxbMoi) {
+                payload.nhaXuatBan = { tenNhaXuatBan: nxbMoi };
+            }
+
+            // Danh mục: ưu tiên ID chọn sẵn, nếu không thì gửi tên mới để backend auto-create
+            const danhMucMoi = document.getElementById("addDanhMucMoi").value.trim();
+            if (danhMucId) {
+                payload.danhMucId = danhMucId;
+            } else if (danhMucMoi) {
+                payload.danhMuc = { tenDanhMuc: danhMucMoi };
+            }
+
+            try {
+                const res = await fetch("/api/sach", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    alert(data.message || "Không thể thêm sách!");
+                    return;
+                }
+
+                alert(data.message || "Thêm sách thành công!");
+                document.getElementById("addBookForm").reset();
+                switchTab('home');
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        // Load Sách đề xuất trang chủ
+        async function loadSuggestedBooks() {
+            const grid = document.getElementById("suggestedBooksGrid");
+            grid.innerHTML = "<p style='color:#64748b;'>Đang tải danh sách sách...</p>";
+            try {
+                const res = await fetch("/api/sach");
+                const books = await res.json();
+                
+                if (!books || books.length === 0) {
+                    grid.innerHTML = "<p>Chưa có đầu sách nào trong cơ sở dữ liệu.</p>";
+                    return;
+                }
+
+                const suggested = books.slice(0, 6);
+                const dsAnhBia = taoBangAnhBia(suggested);
+                grid.innerHTML = suggested.map((b, chiSo) => `
+                    <div class="book-card">
+                        ${renderAnhBiaSach(dsAnhBia[chiSo])}
+                        <div class="book-body">
+                            <div>
+                                <div class="book-code">${b.maSach || 'N/A'} • ${b.namXuatBan || '---'}</div>
+                                <div class="book-title">${b.tenSach}</div>
+                                <div style="font-size: 12px; color: #475569; margin-top: 4px;">
+                                    <strong>Tác giả:</strong> ${b.tacGias && b.tacGias.length > 0 ? Array.from(b.tacGias).join(', ') : 'Đang cập nhật'}
+                                </div>
+                            </div>
+                            <button class="btn-detail" onclick="viewBookDetail(${b.id})">Xem chi tiết</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                grid.innerHTML = `<p style="color: red;">Không thể tải danh sách sách từ backend: ${err.message}</p>`;
+            }
+        }
+
+        // Tra cứu sách
+        async function searchBooks() {
+            const keyword = document.getElementById("searchInput").value.trim();
+            const resultsDiv = document.getElementById("searchResults");
+            if (!keyword) {
+                resultsDiv.style.display = "none";
+                return;
+            }
+
+            resultsDiv.style.display = "block";
+            resultsDiv.innerHTML = "<p style='color:#64748b; padding: 10px 0;'>Đang tìm kiếm...</p>";
+
+            try {
+                const res = await fetch(`/api/sach?keyword=${encodeURIComponent(keyword)}`);
+                const books = await res.json();
+
+                if (!books || books.length === 0) {
+                    resultsDiv.innerHTML = "<p style='color:#e74c3c; padding: 10px 0;'>Không tìm thấy tựa sách nào phù hợp.</p>";
+                    return;
+                }
+
+                const dsAnhBia = taoBangAnhBia(books);
+                resultsDiv.innerHTML = `
+                    <p style="font-weight: 600; margin-bottom: 12px; color: #173b73;">Tìm thấy ${books.length} kết quả:</p>
+                    <div class="books-grid">
+                        ${books.map((b, chiSo) => `
+                            <div class="book-card">
+                                ${renderAnhBiaSach(dsAnhBia[chiSo], "height: 105px; font-size: 13px;")}
+                                <div class="book-body">
+                                    <div>
+                                        <div class="book-code">${b.maSach} • ${b.namXuatBan || '---'}</div>
+                                        <div class="book-title" style="font-size: 14px;">${b.tenSach}</div>
+                                        <div style="font-size: 12px; color: #475569; margin-top: 4px;">
+                                            <strong>Tác giả:</strong> ${b.tacGias && b.tacGias.length > 0 ? Array.from(b.tacGias).join(', ') : 'Đang cập nhật'}
+                                        </div>
+                                    </div>
+                                    <button class="btn-detail" onclick="viewBookDetail(${b.id})">Xem chi tiết</button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } catch (err) {
+                resultsDiv.innerHTML = `<p style="color: red;">Lỗi tìm kiếm: ${err.message}</p>`;
+            }
+        }
+
+        // Load Hồ sơ cá nhân gọi API /api/users/profile/{id}
+        async function loadProfile() {
+            const grid = document.getElementById("profileInfoGrid");
+            grid.innerHTML = "<p style='color:#64748b;'>Đang tải thông tin hồ sơ...</p>";
+
+            const userId = currentUser.id;
+            if (!userId) {
+                grid.innerHTML = "<p style='color: red;'>Không tìm thấy ID người dùng trong phiên đăng nhập.</p>";
+                return;
+            }
+
+            try {
+                const res = await fetch(`/api/users/profile/${userId}`);
+                const profile = await res.json();
+
+                if (!res.ok) {
+                    grid.innerHTML = `<p style="color: red;">${profile.message || 'Không thể tải hồ sơ'}</p>`;
+                    return;
+                }
+
+                grid.innerHTML = `
+                    <div class="info-item">
+                        <label>Mã Sinh Viên</label>
+                        <span>${profile.ma_sv || '---'}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Họ và Tên</label>
+                        <span>${profile.ho_ten || '---'}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Email</label>
+                        <span>${profile.email || '---'}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Số điện thoại</label>
+                        <span>${profile.so_dien_thoai || '---'}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Lớp</label>
+                        <span>${profile.lop || '---'}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Khoa</label>
+                        <span>${profile.khoa || '---'}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Mã thẻ độc giả</label>
+                        <span style="color: #2563eb;">${profile.maTheDocGia || 'Chưa cấp thẻ'}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Ngày cấp thẻ</label>
+                        <span>${profile.ngayCap || '---'}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Ngày hết hạn thẻ</label>
+                        <span>${profile.ngayHetHan || '---'}</span>
+                    </div>
+                `;
+            } catch (err) {
+                grid.innerHTML = `<p style="color: red;">Lỗi kết nối: ${err.message}</p>`;
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // HÀM DÙNG CHUNG
+        // ─────────────────────────────────────────────────────────────
+        const API_URL = "";
+
+        function escapeHtml(value) {
+            return String(value ?? "").replace(/[&<>"']/g, ch => ({
+                "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+            }[ch]));
+        }
+
+        // Ảnh bìa minh hoạ do backend phục vụ tại /images/books/*
+        const ANH_BIA_SACH = [
+            "/images/books/bia-01.jpg",
+            "/images/books/bia-02.jpg",
+            "/images/books/bia-03.jpg",
+            "/images/books/bia-04.jpg",
+            "/images/books/bia-05.jpg",
+            "/images/books/bia-06.jpg",
+            "/images/books/bia-07.jpg",
+            "/images/books/bia-08.jpg",
+            "/images/books/bia-09.jpg",
+            "/images/books/bia-10.jpg"
+        ];
+
+        function bamChuoi(value) {
+            let hash = 0;
+            const str = String(value || "");
+            for (let i = 0; i < str.length; i++) {
+                hash = (hash * 31 + str.charCodeAt(i)) >>> 0;
+            }
+            return hash;
+        }
+
+        // Bìa đã gán cho từng đầu sách, dùng lại để không lệch ảnh giữa các lần render
+        const anhBiaDaGan = new Map();
+
+        function khoaBamSach(book) {
+            return `${book.maSach || ""}|${book.tenSach || ""}|${book.id || ""}`;
+        }
+
+        function khoaSach(book) {
+            return String(book.id ?? book.maSach ?? book.tenSach ?? "");
+        }
+
+        function chonAnhBiaTheoHash(book) {
+            return ANH_BIA_SACH[bamChuoi(khoaBamSach(book)) % ANH_BIA_SACH.length];
+        }
+
+        // Cấp phát bìa cho cả danh sách: không trùng nhau khi danh sách <= 10 cuốn,
+        // sách đã có bìa thì giữ nguyên, trùng thì dò sang ô trống kế tiếp.
+        function taoBangAnhBia(danhSach) {
+            const ketQua = [];
+            const daDung = new Set();
+
+            danhSach.forEach((book, viTriTrongDs) => {
+                const khoa = khoaSach(book);
+
+                // Danh sách dài hơn số ảnh: lặp lại đúng vòng bìa của 10 cuốn đầu,
+                // nhờ vậy 10 thẻ liền nhau vẫn luôn đủ 10 bìa khác nhau.
+                if (daDung.size >= ANH_BIA_SACH.length) {
+                    const url = ketQua[viTriTrongDs % ANH_BIA_SACH.length];
+                    anhBiaDaGan.set(khoa, url);
+                    ketQua.push(url);
+                    return;
+                }
+
+                const daGan = anhBiaDaGan.get(khoa);
+                let viTri = daGan
+                    ? ANH_BIA_SACH.indexOf(daGan)
+                    : bamChuoi(khoaBamSach(book)) % ANH_BIA_SACH.length;
+                if (viTri < 0) {
+                    viTri = bamChuoi(khoaBamSach(book)) % ANH_BIA_SACH.length;
+                }
+
+                for (let buoc = 0; buoc < ANH_BIA_SACH.length && daDung.has(viTri); buoc++) {
+                    viTri = (viTri + 1) % ANH_BIA_SACH.length;
+                }
+
+                const url = ANH_BIA_SACH[viTri];
+                anhBiaDaGan.set(khoa, url);
+                daDung.add(viTri);
+                ketQua.push(url);
+            });
+
+            return ketQua;
+        }
+
+        function renderAnhBiaSach(anhBia, styleThem) {
+            const style = styleThem ? ` style="${styleThem}"` : "";
+            return `
+                <div class="book-thumb"${style}>
+                    <img class="book-thumb-img" src="${anhBia}" alt="" loading="lazy" decoding="async" onerror="this.remove()">
+                    <span class="book-thumb-label">📚 Sách Thư Viện</span>
+                </div>
+            `;
+        }
+
+        function dinhDangNgayGio(value) {
+            if (!value) return "---";
+            return String(value).replace("T", " ").slice(0, 16);
+        }
+
+        function ngayIso(date) {
+            const nam = date.getFullYear();
+            const thang = String(date.getMonth() + 1).padStart(2, "0");
+            const ngay = String(date.getDate()).padStart(2, "0");
+            return `${nam}-${thang}-${ngay}`;
+        }
+
+        function nhanTrangThaiPhieu(status) {
+            const map = {
+                CHO_DUYET: "Chờ duyệt",
+                DANG_MUON: "Đang mượn",
+                DA_TRA: "Đã trả",
+                TU_CHOI: "Từ chối",
+                DA_HUY: "Đã huỷ"
+            };
+            return map[status] || status || "---";
+        }
+
+        function classTrangThaiPhieu(status) {
+            const map = {
+                CHO_DUYET: "badge-pending",
+                DANG_MUON: "badge-borrowing",
+                DA_TRA: "badge-returned",
+                TU_CHOI: "badge-rejected",
+                DA_HUY: "badge-rejected"
+            };
+            return map[status] || "badge-pending";
+        }
+
+        function badgeTrangThaiSach(phieu, sach) {
+            if (sach.daTra) {
+                return '<span class="badge badge-returned">Đã trả</span>';
+            }
+            switch (phieu.trangThai) {
+                case "CHO_DUYET":
+                    return '<span class="badge badge-pending">Chờ duyệt</span>';
+                case "DA_HUY":
+                    return '<span class="badge badge-rejected">Đã huỷ</span>';
+                case "TU_CHOI":
+                    return '<span class="badge badge-rejected">Từ chối</span>';
+                case "DA_TRA":
+                    return '<span class="badge badge-returned">Đã trả</span>';
+                default:
+                    return '<span class="badge badge-borrowing">Đang mượn</span>';
+            }
+        }
+
+        // Load Lịch sử mượn sách gọi API /api/phieu-muon/lich-su/{nguoiDungId}
+        async function loadBorrowingHistory() {
+            const container = document.getElementById("historyContainer");
+            container.innerHTML = "<p style='color:#64748b;'>Đang tải lịch sử phiếu mượn...</p>";
+
+            const userId = currentUser.id;
+            if (!userId) {
+                container.innerHTML = "<p style='color: red;'>Không tìm thấy ID người dùng.</p>";
+                return;
+            }
+
+            try {
+                const res = await fetch(`/api/phieu-muon/lich-su/${userId}`);
+                const history = await res.json();
+
+                if (!res.ok) {
+                    container.innerHTML = `<p style="color: red;">${history.message || 'Không thể tải lịch sử mượn sách'}</p>`;
+                    return;
+                }
+
+                if (!history || history.length === 0) {
+                    container.innerHTML = `
+                        <div class="card empty-state">
+                            <div class="icon">📭</div>
+                            <h3 style="color: #173b73; margin-bottom: 6px;">Bạn chưa có lịch sử mượn sách nào</h3>
+                            <p>Hãy liên hệ thủ thư hoặc đến thư viện để tiến hành mượn sách.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = history.map(pm => {
+                    const dsSach = pm.danhSachSach || [];
+                    return `
+                    <div class="history-card">
+                        <div class="history-header">
+                            <div>
+                                <strong style="color: #173b73; font-size: 16px;">Phiếu mượn #${pm.phieuMuonId}</strong>
+                                <span style="margin-left: 15px; font-size: 13px; color: #64748b;">Ngày mượn: ${dinhDangNgayGio(pm.ngayMuon)}</span>
+                            </div>
+                            <div>
+                                <span class="badge ${classTrangThaiPhieu(pm.trangThai)}">${escapeHtml(nhanTrangThaiPhieu(pm.trangThai))}</span>
+                                ${pm.trangThai === 'CHO_DUYET' ? `<button type="button" class="btn-admin" style="background:#fee2e2;color:#b91c1c;margin-left:8px;" onclick="huyYeuCauMuon(${pm.phieuMuonId})">Huỷ yêu cầu</button>` : ''}
+                            </div>
+                        </div>
+                        <div style="font-size: 13px; color: #475569; margin-bottom: 12px; display: flex; gap: 30px; flex-wrap: wrap;">
+                            <span>📅 Hạn trả: <strong style="color: #e74c3c;">${pm.hanTra || '---'}</strong></span>
+                            ${pm.ngayTraThucTe ? `<span>✅ ${pm.trangThai === 'DA_TRA' ? 'Ngày trả thực tế' : 'Ngày trả gần nhất'}: <strong style="color: #15803d;">${dinhDangNgayGio(pm.ngayTraThucTe)}</strong></span>` : ''}
+                            <span>🔄 Số lần gia hạn: <strong>${pm.soLanGiaHan ?? 0}</strong></span>
+                        </div>
+                        
+                        <p style="font-size: 13px; font-weight: 600; color: #1e293b; margin-top: 10px;">Danh sách cuốn sách đã mượn:</p>
+                        <table class="book-list-table">
+                            <thead>
+                                <tr>
+                                    <th>Mã cuốn sách</th>
+                                    <th>Tên sách</th>
+                                    <th>Trạng thái</th>
+                                    <th>Tình trạng</th>
+                                    <th>Ngày trả</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${dsSach.length > 0 ? dsSach.map(s => `
+                                    <tr>
+                                        <td><code style="background: #f1f5f9; padding: 2px 6px; border-radius: 4px; color: #2563eb;">${escapeHtml(s.maCuonSach || '---')}</code></td>
+                                        <td style="font-weight: 600; color: #1e293b;">${escapeHtml(s.tenSach || '---')}</td>
+                                        <td>${badgeTrangThaiSach(pm, s)}</td>
+                                        <td>${escapeHtml(s.daTra ? ('Khi trả: ' + (s.tinhTrangKhiTra || '---')) : ('Khi mượn: ' + (s.tinhTrang || '---')))}</td>
+                                        <td>${s.daTra ? dinhDangNgayGio(s.ngayTra) : 'Chưa trả'}</td>
+                                    </tr>
+                                `).join('') : '<tr><td colspan="5" style="color: #64748b;">Không có thông tin chi tiết sách.</td></tr>'}
+                            </tbody>
+                        </table>
+                    </div>`;
+                }).join('');
+
+            } catch (err) {
+                container.innerHTML = `<p style="color: red;">Lỗi kết nối khi tải lịch sử: ${err.message}</p>`;
+            }
+        }
+
+        // Huỷ yêu cầu mượn online khi phiếu còn chờ duyệt
+        async function huyYeuCauMuon(id) {
+            if (!currentUser || !currentUser.id) {
+                alert("Vui lòng đăng nhập để thực hiện.");
+                return;
+            }
+            if (!confirm(`Bạn có chắc muốn huỷ yêu cầu mượn sách #${id}?`)) {
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_URL}/api/phieu-muon/${id}/huy`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ nguoiDungId: currentUser.id })
+                });
+
+                const raw = await res.text();
+                let data = {};
+                try {
+                    data = raw ? JSON.parse(raw) : {};
+                } catch (parseErr) {
+                    data = { message: raw };
+                }
+
+                if (!res.ok) {
+                    alert(data.message || "Không thể huỷ yêu cầu mượn sách.");
+                    return;
+                }
+
+                alert(data.message || "Đã huỷ yêu cầu mượn sách.");
+                loadBorrowingHistory();
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // US 3.1.1 - LẬP PHIẾU MƯỢN (THỦ THƯ)
+        // ─────────────────────────────────────────────────────────────
+        let lpDaKhoiTao = false;
+        let lpCuonDangChon = [];
+        let lpCuonKhaDungTheoId = {};
+
+        async function loadLapPhieuData() {
+            if (lpDaKhoiTao) return;
+
+            const select = document.getElementById("lpDocGia");
+            select.innerHTML = '<option value="">Đang tải độc giả...</option>';
+            try {
+                const res = await fetch(`${API_URL}/api/doc-gia`);
+                const ds = await res.json();
+                if (!res.ok) throw new Error(ds.message || "Không thể tải danh sách độc giả");
+
+                select.innerHTML = '<option value="">-- Chọn độc giả --</option>' + ds.map(dg => {
+                    const thongTin = [dg.maTheDocGia, dg.hoTen, dg.lop].filter(Boolean).join(" - ");
+                    return `<option value="${dg.id}">${escapeHtml(thongTin)}</option>`;
+                }).join("");
+
+                const hanTraInput = document.getElementById("lpHanTra");
+                if (!hanTraInput.value) {
+                    const macDinh = new Date();
+                    macDinh.setDate(macDinh.getDate() + 14);
+                    hanTraInput.value = ngayIso(macDinh);
+                }
+                lpDaKhoiTao = true;
+            } catch (err) {
+                select.innerHTML = '<option value="">-- Lỗi tải dữ liệu --</option>';
+                alert("Lỗi tải danh sách độc giả: " + err.message);
+            }
+        }
+
+        async function searchSachForBorrow() {
+            const keyword = document.getElementById("lpSearchSach").value.trim();
+            const box = document.getElementById("lpSearchResults");
+            box.innerHTML = '<p style="color:#64748b;">Đang tìm sách...</p>';
+
+            try {
+                const url = keyword
+                    ? `${API_URL}/api/sach?keyword=${encodeURIComponent(keyword)}`
+                    : `${API_URL}/api/sach`;
+                const res = await fetch(url);
+                const ds = await res.json();
+                if (!res.ok) throw new Error(ds.message || "Không thể tìm sách");
+
+                if (!ds.length) {
+                    box.innerHTML = '<p style="color:#64748b;">Không tìm thấy đầu sách phù hợp.</p>';
+                    return;
+                }
+
+                box.innerHTML = ds.map(sach => {
+                    const tacGia = Array.isArray(sach.tacGias) ? sach.tacGias.join(", ") : "";
+                    return `
+                        <div class="lp-book-row">
+                            <div>
+                                <strong style="color:#1e293b;">${escapeHtml(sach.tenSach)}</strong>
+                                <div style="font-size:12px;color:#64748b;margin-top:2px;">Mã: ${escapeHtml(sach.maSach || '---')}${tacGia ? " · " + escapeHtml(tacGia) : ""}</div>
+                            </div>
+                            <button type="button" class="btn-admin" style="background:#2563eb;color:white;white-space:nowrap;" onclick="chonDauSachForBorrow(${sach.id})">Xem cuốn sẵn có</button>
+                        </div>`;
+                }).join("");
+            } catch (err) {
+                box.innerHTML = `<p style="color:red;">Lỗi tìm sách: ${escapeHtml(err.message)}</p>`;
+            }
+        }
+
+        async function chonDauSachForBorrow(sachId) {
+            const panel = document.getElementById("lpCopyPanel");
+            panel.innerHTML = '<p style="color:#64748b;">Đang tải các cuốn sách...</p>';
+
+            try {
+                const res = await fetch(`${API_URL}/api/sach/${sachId}/cuon-sach?khaDung=true`);
+                const ds = await res.json();
+                if (!res.ok) throw new Error(ds.message || "Không thể tải cuốn sách");
+
+                if (!ds.length) {
+                    panel.innerHTML = '<div class="history-card" style="color:#64748b;">Đầu sách này hiện không còn cuốn nào sẵn sàng để mượn.</div>';
+                    return;
+                }
+
+                ds.forEach(cuon => { lpCuonKhaDungTheoId[cuon.id] = cuon; });
+                const tenSach = ds[0].tenSach || "";
+
+                panel.innerHTML = `
+                    <div class="history-card">
+                        <div style="font-weight:700;color:#173b73;margin-bottom:10px;">Các cuốn sẵn sàng của "${escapeHtml(tenSach)}"</div>
+                        <table class="book-list-table">
+                            <thead>
+                                <tr><th>Chọn</th><th>Mã cuốn</th><th>Tình trạng</th><th>Trạng thái</th></tr>
+                            </thead>
+                            <tbody>
+                                ${ds.map(cuon => `
+                                    <tr>
+                                        <td><input type="checkbox" class="lp-cuon-check" value="${cuon.id}" onchange="toggleCuonMuon(${cuon.id}, this.checked)" ${lpCuonDangChon.some(c => c.id === cuon.id) ? "checked" : ""}></td>
+                                        <td><code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;color:#2563eb;">${escapeHtml(cuon.maCuonSach)}</code></td>
+                                        <td>${escapeHtml(cuon.tinhTrang || '---')}</td>
+                                        <td>${escapeHtml(cuon.trangThai || '---')}</td>
+                                    </tr>`).join("")}
+                            </tbody>
+                        </table>
+                    </div>`;
+            } catch (err) {
+                panel.innerHTML = `<p style="color:red;">Lỗi tải cuốn sách: ${escapeHtml(err.message)}</p>`;
+            }
+        }
+
+        function toggleCuonMuon(cuonSachId, checked) {
+            const cuon = lpCuonKhaDungTheoId[cuonSachId];
+            if (!cuon) return;
+
+            if (checked) {
+                if (!lpCuonDangChon.some(c => c.id === cuonSachId)) {
+                    lpCuonDangChon.push({
+                        id: cuon.id,
+                        maCuonSach: cuon.maCuonSach,
+                        maSach: cuon.maSach,
+                        tenSach: cuon.tenSach,
+                        tinhTrang: cuon.tinhTrang
+                    });
+                }
+            } else {
+                lpCuonDangChon = lpCuonDangChon.filter(c => c.id !== cuonSachId);
+            }
+            renderLpCuonDangChon();
+        }
+
+        function boChonCuon(cuonSachId) {
+            lpCuonDangChon = lpCuonDangChon.filter(c => c.id !== cuonSachId);
+            const checkbox = document.querySelector(`.lp-cuon-check[value="${cuonSachId}"]`);
+            if (checkbox) checkbox.checked = false;
+            renderLpCuonDangChon();
+        }
+
+        function renderLpCuonDangChon() {
+            const box = document.getElementById("lpSelectedCopies");
+            document.getElementById("lpSelectedCount").innerText = lpCuonDangChon.length;
+
+            if (!lpCuonDangChon.length) {
+                box.innerHTML = '<p style="color:#64748b;font-size:13px;">Chưa chọn cuốn sách nào.</p>';
+                return;
+            }
+
+            box.innerHTML = `
+                <table class="book-list-table">
+                    <thead>
+                        <tr><th>Mã cuốn</th><th>Mã đầu sách</th><th>Tên sách</th><th>Tình trạng</th><th></th></tr>
+                    </thead>
+                    <tbody>
+                        ${lpCuonDangChon.map(cuon => `
+                            <tr>
+                                <td><code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;color:#2563eb;">${escapeHtml(cuon.maCuonSach)}</code></td>
+                                <td><code>${escapeHtml(cuon.maSach || '---')}</code></td>
+                                <td style="font-weight:600;color:#1e293b;">${escapeHtml(cuon.tenSach || '---')}</td>
+                                <td>${escapeHtml(cuon.tinhTrang || '---')}</td>
+                                <td><button type="button" class="btn-admin" style="background:#fee2e2;color:#b91c1c;" onclick="boChonCuon(${cuon.id})">Bỏ</button></td>
+                            </tr>`).join("")}
+                    </tbody>
+                </table>`;
+        }
+
+        async function submitLapPhieuMuon(e) {
+            e.preventDefault();
+
+            const docGiaId = Number(document.getElementById("lpDocGia").value);
+            const hanTra = document.getElementById("lpHanTra").value;
+
+            if (!docGiaId) {
+                alert("Vui lòng chọn độc giả.");
+                return;
+            }
+            if (!hanTra) {
+                alert("Vui lòng chọn hạn trả.");
+                return;
+            }
+            if (!lpCuonDangChon.length) {
+                alert("Vui lòng chọn ít nhất một cuốn sách.");
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_URL}/api/phieu-muon`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        docGiaId: docGiaId,
+                        danhSachCuonSachId: lpCuonDangChon.map(c => c.id),
+                        hanTra: hanTra,
+                        nguoiLapId: currentUser.id
+                    })
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data.message || "Không thể lập phiếu mượn.");
+                    return;
+                }
+
+                alert(data.message || "Lập phiếu mượn thành công!");
+                lpCuonDangChon = [];
+                lpCuonKhaDungTheoId = {};
+                document.getElementById("lpDocGia").value = "";
+                document.getElementById("lpSearchSach").value = "";
+                document.getElementById("lpSearchResults").innerHTML = "";
+                document.getElementById("lpCopyPanel").innerHTML = "";
+                const macDinh = new Date();
+                macDinh.setDate(macDinh.getDate() + 14);
+                document.getElementById("lpHanTra").value = ngayIso(macDinh);
+                renderLpCuonDangChon();
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // US 3.1.2 + 3.2.1 - QUẢN LÝ MƯỢN TRẢ (THỦ THƯ)
+        // ─────────────────────────────────────────────────────────────
+        let adminPhieuCache = [];
+
+        async function loadAdminPhieuMuon() {
+            const container = document.getElementById("adminPhieuMuonContainer");
+            container.innerHTML = '<p style="color:#64748b;">Đang tải danh sách phiếu mượn...</p>';
+
+            const params = new URLSearchParams();
+            const trangThai = document.getElementById("qlTrangThai").value;
+            const keyword = document.getElementById("qlKeyword").value.trim();
+            if (trangThai) params.append("trangThai", trangThai);
+            if (keyword) params.append("keyword", keyword);
+
+            try {
+                const res = await fetch(`${API_URL}/api/phieu-muon?${params.toString()}`);
+                const data = await res.json();
+
+                if (!res.ok) {
+                    container.innerHTML = `<p style="color:red;">${escapeHtml(data.message || "Không thể tải danh sách phiếu mượn")}</p>`;
+                    return;
+                }
+
+                adminPhieuCache = data;
+                if (!data.length) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="icon">📭</div>
+                            <p>Không có phiếu mượn nào phù hợp.</p>
+                        </div>`;
+                    return;
+                }
+
+                const homNay = ngayIso(new Date());
+                container.innerHTML = `
+                    <div class="admin-table-wrap">
+                        <table class="book-list-table">
+                            <thead>
+                                <tr>
+                                    <th>Mã phiếu</th>
+                                    <th>Độc giả</th>
+                                    <th>Ngày mượn</th>
+                                    <th>Hạn trả</th>
+                                    <th>Số cuốn</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${data.map(pm => {
+                                    const quaHan = pm.trangThai === "DANG_MUON" && pm.hanTra && pm.hanTra < homNay;
+                                    const dsSach = pm.danhSachSach || [];
+                                    const soDaTra = dsSach.filter(s => s.daTra).length;
+                                    const thaoTac = [];
+
+                                    thaoTac.push(`<button type="button" class="btn-admin" style="background:#e0e7ff;color:#1d4ed8;" onclick="openPhieuDetail(${pm.phieuMuonId})">Chi tiết</button>`);
+                                    if (pm.trangThai === "CHO_DUYET") {
+                                        thaoTac.push(`<button type="button" class="btn-admin" style="background:#d1fae5;color:#065f46;" onclick="duyetPhieu(${pm.phieuMuonId})">Duyệt</button>`);
+                                        thaoTac.push(`<button type="button" class="btn-admin" style="background:#fee2e2;color:#b91c1c;" onclick="tuChoiPhieu(${pm.phieuMuonId})">Từ chối</button>`);
+                                    }
+                                    if (pm.trangThai === "DANG_MUON") {
+                                        thaoTac.push(`<button type="button" class="btn-admin" style="background:#173b73;color:white;" onclick="openTraSachModal(${pm.phieuMuonId})">Trả sách</button>`);
+                                    }
+
+                                    return `
+                                        <tr>
+                                            <td><strong>#${pm.phieuMuonId}</strong></td>
+                                            <td>
+                                                <strong style="color:#1e293b;">${escapeHtml(pm.tenDocGia || '---')}</strong><br>
+                                                <small style="color:#64748b;">${escapeHtml(pm.maTheDocGia || '')}</small>
+                                            </td>
+                                            <td>${dinhDangNgayGio(pm.ngayMuon)}</td>
+                                            <td>
+                                                ${escapeHtml(pm.hanTra || '---')}
+                                                ${quaHan ? '<br><span class="badge badge-overdue" style="font-size:10px;">Quá hạn</span>' : ''}
+                                            </td>
+                                            <td>${dsSach.length}${soDaTra ? ` <small style="color:#64748b;">(${soDaTra} đã trả)</small>` : ''}</td>
+                                            <td><span class="badge ${classTrangThaiPhieu(pm.trangThai)}">${escapeHtml(nhanTrangThaiPhieu(pm.trangThai))}</span></td>
+                                            <td><div style="display:flex;gap:6px;flex-wrap:wrap;">${thaoTac.join("")}</div></td>
+                                        </tr>`;
+                                }).join("")}
+                            </tbody>
+                        </table>
+                    </div>`;
+            } catch (err) {
+                container.innerHTML = `<p style="color:red;">Lỗi kết nối: ${escapeHtml(err.message)}</p>`;
+            }
+        }
+
+        function timPhieuTrongCache(id) {
+            return adminPhieuCache.find(pm => pm.phieuMuonId === id);
+        }
+
+        function moModalUser(tieuDe, noiDung) {
+            document.getElementById("userModalTitle").innerText = tieuDe;
+            document.getElementById("userModalBody").innerHTML = noiDung;
+            document.getElementById("userModal").classList.add("show");
+        }
+
+        function openPhieuDetail(id) {
+            const pm = timPhieuTrongCache(id);
+            if (!pm) {
+                alert("Không tìm thấy dữ liệu phiếu mượn.");
+                return;
+            }
+
+            const dsSach = pm.danhSachSach || [];
+            const noiDung = `
+                <div style="display:flex;gap:20px;flex-wrap:wrap;font-size:13px;margin-bottom:14px;">
+                    <div><strong>Độc giả:</strong> ${escapeHtml(pm.tenDocGia || '---')}</div>
+                    <div><strong>Mã thẻ:</strong> ${escapeHtml(pm.maTheDocGia || '---')}</div>
+                    <div><strong>Ngày mượn:</strong> ${dinhDangNgayGio(pm.ngayMuon)}</div>
+                    <div><strong>Hạn trả:</strong> ${escapeHtml(pm.hanTra || '---')}</div>
+                    <div><strong>Trạng thái:</strong> <span class="badge ${classTrangThaiPhieu(pm.trangThai)}">${escapeHtml(nhanTrangThaiPhieu(pm.trangThai))}</span></div>
+                </div>
+                <table class="book-list-table">
+                    <thead>
+                        <tr><th>Mã cuốn</th><th>Tên sách</th><th>Tình trạng</th><th>Trả sách</th><th>Ngày trả</th></tr>
+                    </thead>
+                    <tbody>
+                        ${dsSach.length ? dsSach.map(s => `
+                            <tr>
+                                <td><code>${escapeHtml(s.maCuonSach || '---')}</code></td>
+                                <td style="font-weight:600;color:#1e293b;">${escapeHtml(s.tenSach || '---')}</td>
+                                <td>${escapeHtml(s.daTra ? (s.tinhTrangKhiTra || '---') : (s.tinhTrang || '---'))}</td>
+                                <td>${s.daTra
+                                    ? '<span class="badge badge-returned">Đã trả</span>'
+                                    : '<span class="badge badge-borrowing">Đang mượn</span>'}</td>
+                                <td>${s.daTra ? dinhDangNgayGio(s.ngayTra) : '---'}</td>
+                            </tr>`).join("") : '<tr><td colspan="5" style="color:#64748b;">Không có chi tiết sách.</td></tr>'}
+                    </tbody>
+                </table>`;
+
+            moModalUser(`📄 Phiếu mượn #${pm.phieuMuonId}`, noiDung);
+        }
+
+        async function duyetPhieu(id) {
+            if (!confirm(`Duyệt phiếu mượn #${id}? Hệ thống sẽ giữ cuốn sách cho độc giả.`)) return;
+
+            try {
+                const res = await fetch(`${API_URL}/api/phieu-muon/${id}/duyet`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ nguoiDuyetId: currentUser.id })
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data.message || "Không thể duyệt phiếu mượn.");
+                    return;
+                }
+                alert(data.message || "Duyệt phiếu mượn thành công!");
+                closeUserModal();
+                loadAdminPhieuMuon();
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        async function tuChoiPhieu(id) {
+            if (!confirm(`Từ chối phiếu mượn #${id}?`)) return;
+
+            try {
+                const res = await fetch(`${API_URL}/api/phieu-muon/${id}/tu-choi`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ nguoiDuyetId: currentUser.id })
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data.message || "Không thể từ chối phiếu mượn.");
+                    return;
+                }
+                alert(data.message || "Đã từ chối phiếu mượn.");
+                closeUserModal();
+                loadAdminPhieuMuon();
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        function openTraSachModal(id) {
+            const pm = timPhieuTrongCache(id);
+            if (!pm) {
+                alert("Không tìm thấy dữ liệu phiếu mượn.");
+                return;
+            }
+
+            const dsChuaTra = (pm.danhSachSach || []).filter(s => !s.daTra && s.cuonSachId != null);
+            if (!dsChuaTra.length) {
+                alert("Phiếu này không còn cuốn nào cần trả.");
+                return;
+            }
+
+            const noiDung = `
+                <div style="font-size:13px;margin-bottom:12px;display:flex;gap:20px;flex-wrap:wrap;">
+                    <span><strong>Độc giả:</strong> ${escapeHtml(pm.tenDocGia || '---')}</span>
+                    <span><strong>Hạn trả:</strong> ${escapeHtml(pm.hanTra || '---')}</span>
+                </div>
+                <p style="font-size:13px;color:#475569;margin-bottom:8px;">Tích chọn cuốn sách trả và ghi nhận tình trạng thực tế:</p>
+                <table class="book-list-table">
+                    <thead>
+                        <tr><th>Trả</th><th>Mã cuốn</th><th>Tên sách</th><th>Tình trạng khi trả</th></tr>
+                    </thead>
+                    <tbody>
+                        ${dsChuaTra.map(s => `
+                            <tr>
+                                <td><input type="checkbox" class="tra-cuon" value="${s.cuonSachId}" checked></td>
+                                <td><code>${escapeHtml(s.maCuonSach || '---')}</code></td>
+                                <td style="font-weight:600;color:#1e293b;">${escapeHtml(s.tenSach || '---')}</td>
+                                <td>
+                                    <select id="tt-${s.cuonSachId}" style="padding:6px 8px;border:1px solid #cbd5e1;border-radius:6px;">
+                                        <option value="TỐT">Tốt</option>
+                                        <option value="CŨ">Cũ</option>
+                                        <option value="MỚI">Mới</option>
+                                        <option value="HỎNG">Hỏng</option>
+                                        <option value="MẤT">Mất</option>
+                                    </select>
+                                </td>
+                            </tr>`).join("")}
+                    </tbody>
+                </table>
+                <button type="button" onclick="submitTraSach(${pm.phieuMuonId})" style="margin-top:16px;width:100%;background:#173b73;color:white;border:none;padding:11px;border-radius:8px;font-weight:600;cursor:pointer;">Xác nhận trả sách</button>`;
+
+            moModalUser(`↩️ Trả sách - Phiếu #${pm.phieuMuonId}`, noiDung);
+        }
+
+        async function submitTraSach(id) {
+            const daChon = Array.from(document.querySelectorAll(".tra-cuon:checked"));
+            if (!daChon.length) {
+                alert("Vui lòng chọn ít nhất một cuốn sách để trả.");
+                return;
+            }
+
+            const danhSachTra = daChon.map(checkbox => ({
+                cuonSachId: Number(checkbox.value),
+                tinhTrangKhiTra: document.getElementById(`tt-${checkbox.value}`).value
+            }));
+
+            try {
+                const res = await fetch(`${API_URL}/api/phieu-muon/${id}/tra`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        nguoiLapId: currentUser.id,
+                        danhSachTra: danhSachTra
+                    })
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data.message || "Không thể ghi nhận trả sách.");
+                    return;
+                }
+                alert(data.message || "Ghi nhận trả sách thành công!");
+                closeUserModal();
+                if (document.getElementById("tabQuaHan").classList.contains("active")) {
+                    loadQuaHan();
+                } else {
+                    loadAdminPhieuMuon();
+                }
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        async function logout() {
+            try {
+                await fetch("/api/users/dang-xuat", {
+                    method: "POST",
+                    credentials: "include"
+                });
+            } catch (e) {
+                // Vẫn cho đăng xuất phía client nếu backend lỗi
+            }
+            localStorage.removeItem("currentUser");
+            window.location.href = "__LOGIN_URL__";
+        }
+
+        let currentBookId = null;
+
+        async function viewBookDetail(id) {
+            currentBookId = id;
+            const modal = document.getElementById("bookModal");
+            const modalContent = document.getElementById("modalBookBody");
+            modalContent.innerHTML = "<p style='text-align: center; color: #64748b;'>Đang tải chi tiết sách...</p>";
+            modal.classList.add("show");
+
+            const nutMuonOnline = document.getElementById("btnMuonOnline");
+            if (nutMuonOnline) {
+                nutMuonOnline.style.display = laThuThu() ? "none" : "";
+            }
+
+            try {
+                const res = await fetch(`/api/sach/${id}`);
+                const b = await res.json();
+
+                if (!res.ok) {
+                    modalContent.innerHTML = `<p style="color: red; text-align: center;">${b.message || 'Không thể tải chi tiết sách'}</p>`;
+                    return;
+                }
+
+                const tacGiasStr = b.tacGias && b.tacGias.length > 0 ? Array.from(b.tacGias).map(t => t.tenTacGia).join(', ') : 'Đang cập nhật';
+                const theLoaisStr = b.theLoais && b.theLoais.length > 0 ? Array.from(b.theLoais).map(th => th.tenTheLoai).join(', ') : 'Đang cập nhật';
+                const nutSuaSach = laThuThu()
+                    ? `<div style="margin-top: 16px; text-align: right;"><button type="button" class="btn-admin" style="background: #173b73; color: white; padding: 8px 16px;" onclick="closeModal(); moFormSuaSach(${b.id})">✏️ Sửa sách</button></div>`
+                    : '';
+
+                const anhBiaChiTiet = anhBiaDaGan.get(khoaSach(b)) || chonAnhBiaTheoHash(b);
+
+                modalContent.innerHTML = `
+                    <div style="display: flex; gap: 20px; align-items: start;">
+                        <div class="book-detail-cover">
+                            <span class="book-detail-fallback">📚</span>
+                            <img src="${anhBiaChiTiet}" alt="" loading="lazy" onerror="this.remove()">
+                        </div>
+                        <div style="flex: 1;">
+                            <h3 style="color: #173b73; font-size: 18px; margin-bottom: 6px;">${b.tenSach}</h3>
+                            <p style="font-size: 13px; color: #64748b; margin-bottom: 12px;">Mã sách: <strong>${b.maSach || '---'}</strong></p>
+                            
+                            <div style="font-size: 13px; margin-bottom: 6px;"><strong>Tác giả:</strong> ${tacGiasStr}</div>
+                            <div style="font-size: 13px; margin-bottom: 6px;"><strong>Thể loại:</strong> ${theLoaisStr}</div>
+                            <div style="font-size: 13px; margin-bottom: 6px;"><strong>Năm xuất bản:</strong> ${b.namXuatBan || '---'}</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 16px; border-top: 1px solid #e2e8f0; padding-top: 12px;">
+                        <h4 style="font-size: 13px; color: #1e293b; margin-bottom: 4px;">Mô tả sách:</h4>
+                        <p style="font-size: 13px; color: #475569; line-height: 1.5;">${b.moTa || 'Chưa có mô tả chi tiết cho đầu sách này.'}</p>
+                    </div>
+                    <div id="muonDateBox" style="margin-top: 16px; border-top: 1px solid #e2e8f0; padding-top: 12px;">
+                        <label for="muonHanTra" style="display: block; font-size: 13px; font-weight: 600; color: #1e293b; margin-bottom: 6px;">Ngày trả mong muốn:</label>
+                        <input type="date" id="muonHanTra" style="width: 100%; padding: 9px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px;">
+                        <div style="font-size: 12px; color: #64748b; margin-top: 4px;">Mặc định 14 ngày, tối đa 30 ngày kể từ hôm nay.</div>
+                    </div>
+                    ${nutSuaSach}
+                `;
+
+                const homNay = new Date();
+                const ngayMacDinh = new Date(homNay.getFullYear(), homNay.getMonth(), homNay.getDate() + 14);
+                const ngayToiDa = new Date(homNay.getFullYear(), homNay.getMonth(), homNay.getDate() + 30);
+                const inputHanTra = document.getElementById("muonHanTra");
+                if (inputHanTra) {
+                    inputHanTra.min = ngayIso(homNay);
+                    inputHanTra.max = ngayIso(ngayToiDa);
+                    inputHanTra.value = ngayIso(ngayMacDinh);
+                }
+                const hopMuonDate = document.getElementById("muonDateBox");
+                if (hopMuonDate) {
+                    hopMuonDate.style.display = laThuThu() ? "none" : "";
+                }
+            } catch (err) {
+                modalContent.innerHTML = `<p style="color: red; text-align: center;">Lỗi kết nối: ${err.message}</p>`;
+            }
+        }
+
+        function closeModal() {
+            document.getElementById("bookModal").classList.remove("show");
+        }
+
+        async function muonOnline() {
+            if (laThuThu()) {
+                alert("Tài khoản thủ thư không thể mượn online. Vui lòng dùng tài khoản độc giả.");
+                return;
+            }
+            if (!currentUser || !currentUser.id) {
+                alert("Vui lòng đăng nhập để thực hiện mượn sách!");
+                return;
+            }
+            if (!currentBookId) {
+                alert("Không xác định được đầu sách!");
+                return;
+            }
+
+            const inputHanTra = document.getElementById("muonHanTra");
+            const hanTra = inputHanTra ? inputHanTra.value : "";
+            if (!hanTra) {
+                alert("Vui lòng chọn ngày trả mong muốn!");
+                return;
+            }
+
+            const homNay = new Date();
+            const ngayToiDa = new Date(homNay.getFullYear(), homNay.getMonth(), homNay.getDate() + 30);
+            if (hanTra < ngayIso(homNay)) {
+                alert("Ngày trả không được nhỏ hơn hôm nay!");
+                return;
+            }
+            if (hanTra > ngayIso(ngayToiDa)) {
+                alert("Ngày trả không được vượt quá 30 ngày kể từ hôm nay!");
+                return;
+            }
+
+            if (!confirm(`Bạn có chắc chắn muốn gửi yêu cầu mượn online cuốn sách này?\nHạn trả: ${hanTra}`)) {
+                return;
+            }
+
+            try {
+                const res = await fetch("/api/phieu-muon/muon-online", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        nguoiDungId: currentUser.id,
+                        sachId: currentBookId,
+                        hanTra: hanTra
+                    })
+                });
+
+                const raw = await res.text();
+                let data = {};
+                try {
+                    data = raw ? JSON.parse(raw) : {};
+                } catch (parseErr) {
+                    data = { message: raw };
+                }
+
+                if (!res.ok) {
+                    alert(data.message || "Không thể gửi yêu cầu mượn sách.");
+                    return;
+                }
+
+                alert((data.message || "Gửi yêu cầu mượn online thành công!") + `\nHạn trả mong muốn: ${hanTra}`);
+                closeModal();
+                switchTab('history');
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        // Cài đặt tài khoản (Đổi mật khẩu, email, SĐT)
+        function openChangePasswordModal() {
+            document.getElementById("userModalTitle").innerText = "🔑 Đổi mật khẩu";
+            document.getElementById("userModalBody").innerHTML = `
+                <form id="changePasswordForm" onsubmit="submitChangePassword(event)">
+                    <div style="margin-bottom: 12px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 13px;">Mật khẩu cũ:</label>
+                        <input type="password" id="matKhauCu" required style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                    </div>
+                    <div style="margin-bottom: 12px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 13px;">Mật khẩu mới (tối thiểu 6 ký tự):</label>
+                        <input type="password" id="matKhauMoi" required minlength="6" style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                    </div>
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 13px;">Xác nhận mật khẩu mới:</label>
+                        <input type="password" id="xacNhanMatKhauMoi" required style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                    </div>
+                    <button type="submit" style="width: 100%; background: #2563eb; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer;">Xác nhận đổi mật khẩu</button>
+                </form>
+            `;
+            document.getElementById("userModal").classList.add("show");
+        }
+
+        async function submitChangePassword(e) {
+            e.preventDefault();
+            const matKhauCu = document.getElementById("matKhauCu").value;
+            const matKhauMoi = document.getElementById("matKhauMoi").value;
+            const xacNhanMatKhauMoi = document.getElementById("xacNhanMatKhauMoi").value;
+
+            try {
+                const res = await fetch(`/api/users/${currentUser.id}/doi-mat-khau`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ matKhauCu, matKhauMoi, xacNhanMatKhauMoi })
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data.message || "Không thể đổi mật khẩu");
+                    return;
+                }
+                alert(data.message || "Đổi mật khẩu thành công!");
+                closeUserModal();
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // ĐỔI EMAIL (2 lớp OTP):
+        //   Bước 1: nhập email mới → gửi OTP về email hiện tại
+        //   Bước 2: xác nhận OTP email hiện tại → gửi OTP về email mới
+        //   Bước 3: xác nhận OTP email mới → lưu email
+        // ─────────────────────────────────────────────────────────────
+        let doiEmailBuoc = "";
+        let doiEmailEmailMoi = "";
+        let doiEmailEmailNhan = "";
+        let doiEmailCooldownUntil = 0;
+        let doiEmailTimer = null;
+        let doiEmailSoLanGuiLai = 1;
+
+        function dungDemNguocOtpEmail() {
+            if (doiEmailTimer) {
+                clearInterval(doiEmailTimer);
+                doiEmailTimer = null;
+            }
+        }
+
+        function capNhatNutGuiLaiOtpEmail() {
+            const btn = document.getElementById("btnGuiLaiOtpEmail");
+            if (!btn) return;
+
+            const conLai = Math.max(0, Math.ceil((doiEmailCooldownUntil - Date.now()) / 1000));
+            if (doiEmailSoLanGuiLai <= 0) {
+                btn.disabled = true;
+                btn.innerText = "Đã hết lượt gửi lại";
+            } else if (conLai > 0) {
+                btn.disabled = true;
+                btn.innerText = `Gửi lại OTP (${conLai}s)`;
+            } else {
+                btn.disabled = false;
+                btn.innerText = `Gửi lại OTP (còn ${doiEmailSoLanGuiLai} lần)`;
+            }
+        }
+
+        function batDauDemNguocOtpEmail(giay) {
+            dungDemNguocOtpEmail();
+            doiEmailCooldownUntil = Date.now() + giay * 1000;
+            capNhatNutGuiLaiOtpEmail();
+            doiEmailTimer = setInterval(() => {
+                capNhatNutGuiLaiOtpEmail();
+                if (Date.now() >= doiEmailCooldownUntil) {
+                    clearInterval(doiEmailTimer);
+                    doiEmailTimer = null;
+                }
+            }, 500);
+        }
+
+        function openChangeEmailModal() {
+            dungDemNguocOtpEmail();
+            doiEmailBuoc = "";
+            doiEmailEmailMoi = "";
+            doiEmailEmailNhan = "";
+            doiEmailSoLanGuiLai = 1;
+            doiEmailCooldownUntil = 0;
+
+            const emailHienTai = currentUser.email || "";
+            document.getElementById("userModalTitle").innerText = "✉️ Đổi Email";
+            document.getElementById("userModalBody").innerHTML = `
+                <div style="font-size:12px;font-weight:700;color:#0d9488;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;">Bước 1/3</div>
+                <p style="font-size: 13px; color: #475569; margin-bottom: 12px; line-height: 1.6;">
+                    Email hiện tại: <strong style="color: #0f172a; word-break: break-all;">${escapeHtml(emailHienTai)}</strong><br>
+                    Hệ thống sẽ gửi OTP về email hiện tại trước, sau đó gửi OTP sang email mới để xác nhận email mới là thật.
+                </p>
+                <form onsubmit="batDauDoiEmail(event)">
+                    <div style="margin-bottom: 12px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 13px;">Email mới:</label>
+                        <input type="email" id="emailMoi" required placeholder="emailmoi@gmail.com"
+                            style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                    </div>
+                    <button type="submit" id="btnGuiOtpEmail"
+                        style="width: 100%; background: #0d9488; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer;">
+                        Gửi mã tới email hiện tại
+                    </button>
+                </form>`;
+            document.getElementById("userModal").classList.add("show");
+        }
+
+        async function batDauDoiEmail(e) {
+            e.preventDefault();
+            const emailMoi = document.getElementById("emailMoi").value.trim();
+
+            if (!emailMoi) {
+                alert("Vui lòng nhập email mới");
+                return;
+            }
+            if (currentUser.email && emailMoi.toLowerCase() === currentUser.email.toLowerCase()) {
+                alert("Email mới phải khác email hiện tại");
+                return;
+            }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailMoi)) {
+                alert("Email mới không hợp lệ");
+                return;
+            }
+
+            const btn = document.getElementById("btnGuiOtpEmail");
+            btn.disabled = true;
+            btn.innerText = "Đang gửi mã tới email hiện tại...";
+            let thanhCong = false;
+
+            try {
+                const res = await fetch(`${API_URL}/api/users/${currentUser.id}/doi-email/bat-dau`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ emailMoi })
+                });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    alert(data.message || "Không thể bắt đầu đổi email");
+                    return;
+                }
+
+                thanhCong = true;
+                doiEmailEmailMoi = data.emailMoi || emailMoi;
+                hienThiBuocOtpDoiEmail(data);
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            } finally {
+                if (!thanhCong && document.body.contains(btn)) {
+                    btn.disabled = false;
+                    btn.innerText = "Gửi mã tới email hiện tại";
+                }
+            }
+        }
+
+        function hienThiBuocOtpDoiEmail(data) {
+            doiEmailBuoc = data.buoc || doiEmailBuoc;
+            doiEmailEmailMoi = data.emailMoi || doiEmailEmailMoi;
+            doiEmailEmailNhan = data.emailNhanOtp || data.email
+                || (doiEmailBuoc === "XAC_NHAN_EMAIL_CU" ? (currentUser.email || "") : doiEmailEmailMoi);
+            doiEmailSoLanGuiLai = data.soLanGuiLaiConLai != null
+                ? Number(data.soLanGuiLaiConLai) : 1;
+
+            const laBuocCu = doiEmailBuoc === "XAC_NHAN_EMAIL_CU";
+            const buocSo = laBuocCu ? 2 : 3;
+            const hetHanPhut = Math.max(1, Math.round((data.hetHanGiay || 300) / 60));
+
+            document.getElementById("userModalBody").innerHTML = `
+                <div style="font-size:12px;font-weight:700;color:#0d9488;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;">Bước ${buocSo}/3</div>
+                <div id="otpHintEmail"
+                    style="background: #eef2ff; border: 1px solid #c7d2fe; color: #3730a3; padding: 10px 12px; border-radius: 8px; font-size: 13px; line-height: 1.6; margin-bottom: 12px;">
+                    Mã OTP đã được gửi tới email:<br>
+                    <strong style="font-size:14px; word-break:break-all;">${escapeHtml(doiEmailEmailNhan)}</strong><br>
+                    ${laBuocCu
+                        ? "Mã này xác nhận bạn đang kiểm soát email hiện tại."
+                        : "Mã này xác nhận email mới tồn tại và thuộc về bạn."}
+                    <br>Mã có hiệu lực ${hetHanPhut} phút. Nhập mã 6 chữ số trong email.
+                </div>
+                <p style="font-size:13px;color:#475569;margin-bottom:12px;line-height:1.5;">
+                    Email mới sẽ đổi thành:
+                    <strong style="color:#0f172a;word-break:break-all;">${escapeHtml(doiEmailEmailMoi)}</strong>
+                </p>
+                <form onsubmit="submitVerifyEmail(event)">
+                    <div style="margin-bottom: 14px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 13px;">Mã OTP (6 chữ số):</label>
+                        <input type="text" id="otpEmail" inputmode="numeric" maxlength="6" pattern="\\d{6}" required
+                            placeholder="------"
+                            style="width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 6px; text-align: center; letter-spacing: 6px; font-size: 20px; font-weight: 700;">
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button type="submit" id="btnXacNhanDoiEmail"
+                            style="flex: 1; background: #0d9488; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer;">
+                            ${laBuocCu ? "Xác nhận email hiện tại" : "Xác nhận và đổi email"}
+                        </button>
+                        <button type="button" id="btnGuiLaiOtpEmail" onclick="guiLaiOtpDoiEmail()"
+                            style="background: #e2e8f0; color: #334155; border: none; padding: 10px 16px; border-radius: 6px; font-weight: 600; cursor: pointer;">
+                            Gửi lại OTP
+                        </button>
+                    </div>
+                    <button type="button" onclick="openChangeEmailModal()"
+                        style="width:100%;background:transparent;border:none;color:#64748b;font-size:12px;margin-top:10px;cursor:pointer;text-decoration:underline;">
+                        Đổi email khác / làm lại
+                    </button>
+                </form>`;
+
+            batDauDemNguocOtpEmail(data.cooldownGiay != null ? Number(data.cooldownGiay) : 60);
+            const otpInput = document.getElementById("otpEmail");
+            if (otpInput) otpInput.focus();
+        }
+
+        async function guiLaiOtpDoiEmail() {
+            const btn = document.getElementById("btnGuiLaiOtpEmail");
+            if (!btn) return;
+
+            btn.disabled = true;
+            btn.innerText = "Đang gửi lại...";
+            let thanhCong = false;
+
+            try {
+                const res = await fetch(`${API_URL}/api/users/${currentUser.id}/doi-email/gui-lai`, {
+                    method: 'POST'
+                });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    alert(data.message || "Không gửi lại được OTP");
+                    if (/hết hạn|bắt đầu lại/i.test(data.message || "")) {
+                        openChangeEmailModal();
+                        return;
+                    }
+                    capNhatNutGuiLaiOtpEmail();
+                    return;
+                }
+
+                thanhCong = true;
+                hienThiBuocOtpDoiEmail(data);
+                alert(data.message || "Đã gửi lại mã OTP");
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+                capNhatNutGuiLaiOtpEmail();
+            } finally {
+                if (!thanhCong && document.body.contains(btn)) {
+                    capNhatNutGuiLaiOtpEmail();
+                }
+            }
+        }
+
+        async function submitVerifyEmail(e) {
+            e.preventDefault();
+            const otp = document.getElementById("otpEmail").value.trim();
+
+            if (!/^\d{6}$/.test(otp)) {
+                alert("Vui lòng nhập đủ 6 chữ số của mã OTP");
+                return;
+            }
+
+            const laBuocCu = doiEmailBuoc === "XAC_NHAN_EMAIL_CU";
+            const url = laBuocCu
+                ? `${API_URL}/api/users/${currentUser.id}/doi-email/xac-nhan-cu`
+                : `${API_URL}/api/users/${currentUser.id}/doi-email/xac-nhan`;
+
+            const btn = document.getElementById("btnXacNhanDoiEmail");
+            btn.disabled = true;
+            btn.innerText = "Đang xác nhận...";
+            let thanhCong = false;
+
+            try {
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ otp })
+                });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    alert(data.message || "Xác nhận đổi email thất bại");
+                    if (/hết hạn|bắt đầu lại/i.test(data.message || "")) {
+                        openChangeEmailModal();
+                    }
+                    return;
+                }
+
+                thanhCong = true;
+                if (laBuocCu) {
+                    // Server đã xác nhận email cũ và gửi OTP sang email mới
+                    hienThiBuocOtpDoiEmail(data);
+                    alert(data.message || "Đã xác nhận email hiện tại. Mã OTP mới đã được gửi tới email mới.");
+                } else {
+                    const emailMoi = data.emailMoi || doiEmailEmailMoi;
+                    currentUser.email = emailMoi;
+                    localStorage.setItem("currentUser", JSON.stringify(currentUser));
+                    alert(data.message || "Đổi email thành công!");
+                    dungDemNguocOtpEmail();
+                    closeUserModal();
+                    loadProfile();
+                }
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            } finally {
+                if (!thanhCong && document.body.contains(btn)) {
+                    btn.disabled = false;
+                    btn.innerText = laBuocCu ? "Xác nhận email hiện tại" : "Xác nhận và đổi email";
+                }
+            }
+        }
+
+        async function openChangePhoneModal() {
+            document.getElementById("userModalTitle").innerText = "📱 Đổi Số điện thoại";
+            document.getElementById("userModalBody").innerHTML = "<p style='color:#64748b;'>Đang gửi mã OTP xác nhận về email...</p>";
+            document.getElementById("userModal").classList.add("show");
+
+            try {
+                const res = await fetch(`/api/users/${currentUser.id}/doi-sdt/gui-otp`, { method: 'POST' });
+                const data = await res.json();
+                if (!res.ok) {
+                    document.getElementById("userModalBody").innerHTML = `<p style="color: red;">${data.message || 'Không thể gửi OTP'}</p>`;
+                    return;
+                }
+
+                document.getElementById("userModalBody").innerHTML = `
+                    <p style="color: #d97706; font-size: 13px; margin-bottom: 14px;">${data.message}</p>
+                    <form onsubmit="submitVerifyPhone(event)">
+                        <div style="margin-bottom: 12px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 13px;">Mã OTP (5 phút):</label>
+                            <input type="text" id="otpPhone" required style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                        </div>
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: block; font-weight: 600; margin-bottom: 6px; font-size: 13px;">Số điện thoại mới (VD: 0912345678):</label>
+                            <input type="text" id="sdtMoi" required pattern="^(0|\\+84)[0-9]{9}$" title="Số điện thoại gồm 10 chữ số bắt đầu bằng 0 hoặc +84" style="width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px;">
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <button type="submit" style="flex: 1; background: #d97706; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer;">Xác nhận đổi SĐT</button>
+                            <button type="button" onclick="openChangePhoneModal()" style="background: #e2e8f0; color: #334155; border: none; padding: 10px 16px; border-radius: 6px; font-weight: 600; cursor: pointer;">Gửi lại OTP</button>
+                        </div>
+                    </form>
+                `;
+            } catch (err) {
+                document.getElementById("userModalBody").innerHTML = `<p style="color: red;">Lỗi kết nối: ${err.message}</p>`;
+            }
+        }
+
+        async function submitVerifyPhone(e) {
+            e.preventDefault();
+            const otp = document.getElementById("otpPhone").value;
+            const sdtMoi = document.getElementById("sdtMoi").value;
+
+            try {
+                const res = await fetch(`/api/users/${currentUser.id}/doi-sdt/xac-nhan`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ otp, sdtMoi })
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data.message || "Xác nhận đổi số điện thoại thất bại");
+                    return;
+                }
+                alert(data.message || "Đổi số điện thoại thành công!");
+                closeUserModal();
+                loadProfile();
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        function closeUserModal() {
+            dungDemNguocOtpEmail();
+            document.getElementById("userModal").classList.remove("show");
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // US 1.2.1 + 1.2.2 - QUẢN LÝ NGƯỜI DÙNG (THỦ THƯ)
+        // ─────────────────────────────────────────────────────────────
+        let ndPage = 0;
+        let ndCache = [];
+        let ndVaiTroDaLoad = false;
+
+        function nhanVaiTro(tenVaiTro) {
+            return tenVaiTro === "QUAN_TRI" ? "Quản trị viên" : "Độc giả";
+        }
+
+        function resetBoLocNguoiDung() {
+            document.getElementById("ndKeyword").value = "";
+            document.getElementById("ndVaiTro").value = "";
+            document.getElementById("ndTrangThai").value = "";
+            loadAdminNguoiDung(0);
+        }
+
+        // Đổ danh sách vai trò từ DB vào bộ lọc
+        async function loadVaiTroFilter() {
+            if (ndVaiTroDaLoad) return;
+            const select = document.getElementById("ndVaiTro");
+            try {
+                const res = await fetch(`${API_URL}/api/metadata/vaitro`);
+                if (!res.ok) return;
+                const data = await res.json();
+                select.innerHTML = '<option value="">Tất cả vai trò</option>' +
+                    data.map(v => `<option value="${escapeHtml(v.tenVaiTro)}">${escapeHtml(nhanVaiTro(v.tenVaiTro))}</option>`).join('');
+                ndVaiTroDaLoad = true;
+            } catch (err) {
+                // Không tải được danh sách vai trò thì giữ option mặc định
+            }
+        }
+
+        async function loadAdminNguoiDung(page) {
+            if (typeof page === "number") ndPage = page;
+
+            const container = document.getElementById("adminNguoiDungContainer");
+            const pagination = document.getElementById("adminNguoiDungPagination");
+            const keyword = document.getElementById("ndKeyword").value.trim();
+            const vaiTro = document.getElementById("ndVaiTro").value;
+            const trangThai = document.getElementById("ndTrangThai").value;
+            // Cố định 10 dòng / trang
+            const size = 10;
+
+            container.innerHTML = '<p style="color:#64748b;">Đang tải danh sách người dùng...</p>';
+            pagination.innerHTML = "";
+
+            const params = new URLSearchParams();
+            if (keyword) params.append("keyword", keyword);
+            if (vaiTro) params.append("vaiTro", vaiTro);
+            if (trangThai !== "") params.append("trangThai", trangThai);
+            params.append("page", ndPage);
+            params.append("size", size);
+
+            try {
+                const res = await fetch(`${API_URL}/api/users?${params.toString()}`);
+                const data = await res.json();
+
+                if (!res.ok) {
+                    container.innerHTML = `<p style="color:red;">${escapeHtml(data.message || "Không thể tải danh sách người dùng")}</p>`;
+                    return;
+                }
+
+                // Trang hiện tại rỗng (sau khi lọc / khóa) thì tự lùi về trang trước
+                if (ndPage > 0 && data.content.length === 0 && data.totalElements > 0) {
+                    return loadAdminNguoiDung(ndPage - 1);
+                }
+
+                ndCache = data.content;
+                ndPage = data.page;
+
+                if (!data.content.length) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="icon">📭</div>
+                            <p>Không tìm thấy tài khoản nào phù hợp.</p>
+                        </div>`;
+                    return;
+                }
+
+                container.innerHTML = `
+                    <div class="admin-table-wrap">
+                        <table class="book-list-table">
+                            <thead>
+                                <tr>
+                                    <th>Mã SV</th>
+                                    <th>Họ tên</th>
+                                    <th>Email</th>
+                                    <th>SĐT</th>
+                                    <th>Lớp</th>
+                                    <th>Khoa</th>
+                                    <th>Mã thẻ</th>
+                                    <th>Vai trò</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${data.content.map(nd => {
+                                    const laChinhMinh = currentUser && currentUser.id === nd.id;
+                                    const dangHoatDong = nd.trangThai === true;
+                                    const nut = dangHoatDong
+                                        ? `<button type="button" class="btn-admin" style="background:#fee2e2;color:#b91c1c;${laChinhMinh ? 'opacity:.5;cursor:not-allowed;' : ''}" ${laChinhMinh ? 'disabled title="Không thể khóa tài khoản của chính mình"' : `onclick="doiTrangThaiNguoiDung(${nd.id}, false)"`}>Khóa</button>`
+                                        : `<button type="button" class="btn-admin" style="background:#d1fae5;color:#065f46;" onclick="doiTrangThaiNguoiDung(${nd.id}, true)">Mở khóa</button>`;
+                                    return `
+                                        <tr>
+                                            <td><strong>${escapeHtml(nd.maSv || '---')}</strong></td>
+                                            <td>${escapeHtml(nd.hoTen)}</td>
+                                            <td>${escapeHtml(nd.email)}</td>
+                                            <td>${escapeHtml(nd.soDienThoai || '---')}</td>
+                                            <td>${escapeHtml(nd.lop || '---')}</td>
+                                            <td>${escapeHtml(nd.khoa || '---')}</td>
+                                            <td>${escapeHtml(nd.maTheDocGia || '---')}</td>
+                                            <td style="white-space: nowrap;"><span class="badge ${nd.tenVaiTro === 'QUAN_TRI' ? 'badge-pending' : 'badge-rejected'}">${escapeHtml(nhanVaiTro(nd.tenVaiTro))}</span></td>
+                                            <td style="white-space: nowrap;"><span class="badge ${dangHoatDong ? 'badge-returned' : 'badge-overdue'}">${dangHoatDong ? 'Hoạt động' : 'Đã khóa'}</span></td>
+                                            <td>${nut}</td>
+                                        </tr>`;
+                                }).join("")}
+                            </tbody>
+                        </table>
+                    </div>`;
+
+                renderNguoiDungPagination(data);
+            } catch (err) {
+                container.innerHTML = `<p style="color:red;">Lỗi kết nối: ${escapeHtml(err.message)}</p>`;
+            }
+        }
+
+        function renderNguoiDungPagination(data) {
+            const el = document.getElementById("adminNguoiDungPagination");
+            const tongTrang = data.totalPages;
+
+            if (tongTrang <= 1) {
+                el.innerHTML = `<span class="page-info">Tổng ${data.totalElements} tài khoản</span>`;
+                return;
+            }
+
+            const hienTai = data.page;
+            const batDau = Math.max(0, Math.min(hienTai - 2, tongTrang - 5));
+            const ketThuc = Math.min(tongTrang, batDau + 5);
+
+            let soTrang = "";
+            for (let i = batDau; i < ketThuc; i++) {
+                soTrang += `<button type="button" class="${i === hienTai ? 'active' : ''}" onclick="loadAdminNguoiDung(${i})">${i + 1}</button>`;
+            }
+
+            el.innerHTML = `
+                <button type="button" ${hienTai === 0 ? 'disabled' : ''} onclick="loadAdminNguoiDung(${hienTai - 1})">« Trước</button>
+                ${soTrang}
+                <button type="button" ${data.last ? 'disabled' : ''} onclick="loadAdminNguoiDung(${hienTai + 1})">Sau »</button>
+                <span class="page-info">Trang ${hienTai + 1}/${tongTrang} — tổng ${data.totalElements} tài khoản</span>`;
+        }
+
+        async function doiTrangThaiNguoiDung(id, trangThaiMoi) {
+            const nd = ndCache.find(x => x.id === id);
+            const tenHienThi = nd ? nd.hoTen : "#" + id;
+            const hanhDong = trangThaiMoi ? "mở khóa" : "khóa";
+            if (!confirm(`Bạn có chắc muốn ${hanhDong} tài khoản "${tenHienThi}"?`)) return;
+
+            try {
+                const res = await fetch(`${API_URL}/api/users/${id}/trang-thai`, {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        trangThai: trangThaiMoi,
+                        nguoiThucHienId: currentUser ? currentUser.id : null
+                    })
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data.message || "Không thể cập nhật trạng thái tài khoản");
+                    return;
+                }
+                alert(data.message || "Cập nhật trạng thái thành công!");
+                loadAdminNguoiDung();
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // US 2.2.2 - QUẢN LÝ SÁCH (THỦ THƯ)
+        // ─────────────────────────────────────────────────────────────
+        let adminSachCache = [];
+        let metaSachCache = { daLoad: false, nxb: [], danhMuc: [], tacGia: [], theLoai: [] };
+
+        async function loadAdminSach() {
+            const container = document.getElementById("adminSachContainer");
+            const keyword = document.getElementById("qlSachKeyword").value.trim();
+            container.innerHTML = '<p style="color:#64748b;">Đang tải danh sách sách...</p>';
+
+            try {
+                const url = keyword
+                    ? `${API_URL}/api/sach?keyword=${encodeURIComponent(keyword)}`
+                    : `${API_URL}/api/sach`;
+                const res = await fetch(url);
+                const data = await res.json();
+
+                if (!res.ok) {
+                    container.innerHTML = `<p style="color:red;">${escapeHtml(data.message || "Không thể tải danh sách sách")}</p>`;
+                    return;
+                }
+
+                adminSachCache = data;
+                if (!data.length) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="icon">📭</div>
+                            <p>Không tìm thấy đầu sách nào phù hợp.</p>
+                        </div>`;
+                    return;
+                }
+
+                container.innerHTML = `
+                    <div class="admin-table-wrap">
+                        <table class="book-list-table">
+                            <thead>
+                                <tr>
+                                    <th>Mã sách</th>
+                                    <th>Tên sách</th>
+                                    <th>Năm XB</th>
+                                    <th>Tác giả</th>
+                                    <th>Thể loại</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${data.map(b => `
+                                    <tr>
+                                        <td><strong>${escapeHtml(b.maSach || '---')}</strong></td>
+                                        <td>${escapeHtml(b.tenSach)}</td>
+                                        <td>${b.namXuatBan || '---'}</td>
+                                        <td>${b.tacGias && b.tacGias.length ? escapeHtml(Array.from(b.tacGias).join(', ')) : '---'}</td>
+                                        <td>${b.theLoais && b.theLoais.length ? escapeHtml(Array.from(b.theLoais).join(', ')) : '---'}</td>
+                                        <td>
+                                            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                                                <button type="button" class="btn-admin" style="background:#e0e7ff;color:#1d4ed8;" onclick="viewBookDetail(${b.id})">Xem</button>
+                                                <button type="button" class="btn-admin" style="background:#173b73;color:white;" onclick="moFormSuaSach(${b.id})">Sửa</button>
+                                            </div>
+                                        </td>
+                                    </tr>`).join("")}
+                            </tbody>
+                        </table>
+                    </div>
+                    <p style="margin-top:10px;color:#64748b;font-size:12px;">Tổng ${data.length} đầu sách</p>`;
+            } catch (err) {
+                container.innerHTML = `<p style="color:red;">Lỗi kết nối: ${escapeHtml(err.message)}</p>`;
+            }
+        }
+
+        function resetTimSach() {
+            document.getElementById("qlSachKeyword").value = "";
+            loadAdminSach();
+        }
+
+        async function loadMetaSach() {
+            if (metaSachCache.daLoad) return;
+            const [resNxb, resDm, resTg, resTl] = await Promise.all([
+                fetch(`${API_URL}/api/metadata/nhaxuatban`),
+                fetch(`${API_URL}/api/metadata/danhmuc`),
+                fetch(`${API_URL}/api/metadata/tacgia`),
+                fetch(`${API_URL}/api/metadata/theloai`)
+            ]);
+            metaSachCache.nxb = await resNxb.json();
+            metaSachCache.danhMuc = await resDm.json();
+            metaSachCache.tacGia = await resTg.json();
+            metaSachCache.theLoai = await resTl.json();
+            metaSachCache.daLoad = true;
+        }
+
+        async function moFormSuaSach(id) {
+            try {
+                await loadMetaSach();
+                const res = await fetch(`${API_URL}/api/sach/${id}`);
+                const b = await res.json();
+                if (!res.ok) {
+                    alert(b.message || "Không thể tải thông tin sách");
+                    return;
+                }
+
+                document.getElementById("editBookId").value = b.id;
+                document.getElementById("editMaSach").value = b.maSach || "";
+                document.getElementById("editTenSach").value = b.tenSach || "";
+                document.getElementById("editNamXuatBan").value = b.namXuatBan || "";
+                document.getElementById("editMoTa").value = b.moTa || "";
+
+                const selNxb = document.getElementById("editNhaXuatBan");
+                selNxb.innerHTML = '<option value="">-- Chọn Nhà xuất bản --</option>' +
+                    metaSachCache.nxb.map(n => `<option value="${n.id}">${escapeHtml(n.tenNhaXuatBan)}</option>`).join('');
+                selNxb.value = b.nhaXuatBanId != null ? String(b.nhaXuatBanId) : "";
+
+                const selDm = document.getElementById("editDanhMuc");
+                selDm.innerHTML = '<option value="">-- Chọn Danh mục --</option>' +
+                    metaSachCache.danhMuc.map(d => `<option value="${d.id}">${escapeHtml(d.tenDanhMuc)}</option>`).join('');
+                selDm.value = b.danhMucId != null ? String(b.danhMucId) : "";
+
+                const selTg = document.getElementById("editTacGia");
+                selTg.innerHTML = '<option value="">-- Chọn Tác giả --</option>' +
+                    metaSachCache.tacGia.map(t => `<option value="${t.id}">${escapeHtml(t.tenTacGia)}</option>`).join('');
+                const tacGiaDau = b.tacGias && b.tacGias.length ? Array.from(b.tacGias)[0] : null;
+                selTg.value = tacGiaDau ? String(tacGiaDau.id) : "";
+
+                const selTl = document.getElementById("editTheLoai");
+                selTl.innerHTML = '<option value="">-- Chọn Thể loại --</option>' +
+                    metaSachCache.theLoai.map(t => `<option value="${t.id}">${escapeHtml(t.tenTheLoai)}</option>`).join('');
+                const theLoaiDau = b.theLoais && b.theLoais.length ? Array.from(b.theLoais)[0] : null;
+                selTl.value = theLoaiDau ? String(theLoaiDau.id) : "";
+
+                document.getElementById("bookEditModal").classList.add("show");
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        function closeBookEdit() {
+            document.getElementById("bookEditModal").classList.remove("show");
+        }
+
+        async function submitEditBook(e) {
+            e.preventDefault();
+            const id = document.getElementById("editBookId").value;
+            if (!id) return;
+
+            const payload = {
+                tenSach: document.getElementById("editTenSach").value.trim(),
+                namXuatBan: document.getElementById("editNamXuatBan").value
+                    ? parseInt(document.getElementById("editNamXuatBan").value) : null,
+                moTa: document.getElementById("editMoTa").value.trim()
+            };
+
+            const nxb = document.getElementById("editNhaXuatBan").value;
+            if (nxb) payload.nhaXuatBanId = parseInt(nxb);
+            const dm = document.getElementById("editDanhMuc").value;
+            if (dm) payload.danhMucId = parseInt(dm);
+            const tg = document.getElementById("editTacGia").value;
+            payload.tacGias = tg ? [{ id: parseInt(tg) }] : [];
+            const tl = document.getElementById("editTheLoai").value;
+            payload.theLoais = tl ? [{ id: parseInt(tl) }] : [];
+
+            try {
+                const res = await fetch(`${API_URL}/api/sach/${id}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data.message || "Không thể cập nhật sách");
+                    return;
+                }
+                alert(data.message || "Cập nhật thông tin sách thành công!");
+                closeBookEdit();
+                loadAdminSach();
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // US 2.2.3 - QUẢN LÝ DANH MỤC & THỂ LOẠI
+        // ─────────────────────────────────────────────────────────────
+        let danhMucCache = [];
+        let theLoaiCache = [];
+
+        async function loadDanhMucTable() {
+            const box = document.getElementById("danhMucTable");
+            box.innerHTML = '<p style="color:#64748b;font-size:13px;">Đang tải...</p>';
+            try {
+                const res = await fetch(`${API_URL}/api/danh-muc`);
+                const data = await res.json();
+                if (!res.ok) {
+                    box.innerHTML = `<p style="color:red;font-size:13px;">${escapeHtml(data.message || "Không thể tải danh mục")}</p>`;
+                    return;
+                }
+                danhMucCache = data;
+                if (!data.length) {
+                    box.innerHTML = '<p style="color:#64748b;font-size:13px;">Chưa có danh mục nào.</p>';
+                    return;
+                }
+                box.innerHTML = `
+                    <div class="admin-table-wrap">
+                        <table class="book-list-table">
+                            <thead><tr><th>Tên danh mục</th><th>Mô tả</th><th>Thao tác</th></tr></thead>
+                            <tbody>
+                                ${data.map(d => `
+                                    <tr>
+                                        <td><strong>${escapeHtml(d.tenDanhMuc)}</strong></td>
+                                        <td>${escapeHtml(d.moTa || '---')}</td>
+                                        <td>
+                                            <div style="display:flex;gap:6px;">
+                                                <button type="button" class="btn-admin" style="background:#e0e7ff;color:#1d4ed8;" onclick="suaDanhMuc(${d.id})">Sửa</button>
+                                                <button type="button" class="btn-admin" style="background:#fee2e2;color:#b91c1c;" onclick="xoaDanhMuc(${d.id})">Xóa</button>
+                                            </div>
+                                        </td>
+                                    </tr>`).join("")}
+                            </tbody>
+                        </table>
+                    </div>`;
+            } catch (err) {
+                box.innerHTML = `<p style="color:red;font-size:13px;">Lỗi kết nối: ${escapeHtml(err.message)}</p>`;
+            }
+        }
+
+        function suaDanhMuc(id) {
+            const d = danhMucCache.find(x => x.id === id);
+            if (!d) return;
+            document.getElementById("dmId").value = d.id;
+            document.getElementById("dmTen").value = d.tenDanhMuc || "";
+            document.getElementById("dmMoTa").value = d.moTa || "";
+            document.getElementById("dmSubmitBtn").innerText = "Cập nhật danh mục";
+            document.getElementById("dmCancelBtn").style.display = "";
+            document.getElementById("dmTen").focus();
+        }
+
+        function huySuaDanhMuc() {
+            document.getElementById("danhMucForm").reset();
+            document.getElementById("dmId").value = "";
+            document.getElementById("dmSubmitBtn").innerText = "Thêm danh mục";
+            document.getElementById("dmCancelBtn").style.display = "none";
+        }
+
+        async function luuDanhMuc(e) {
+            e.preventDefault();
+            const id = document.getElementById("dmId").value;
+            const payload = {
+                tenDanhMuc: document.getElementById("dmTen").value.trim(),
+                moTa: document.getElementById("dmMoTa").value.trim()
+            };
+            try {
+                const res = await fetch(id ? `${API_URL}/api/danh-muc/${id}` : `${API_URL}/api/danh-muc`, {
+                    method: id ? "PUT" : "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data.message || "Không thể lưu danh mục");
+                    return;
+                }
+                alert(data.message || "Lưu danh mục thành công!");
+                huySuaDanhMuc();
+                metaSachCache.daLoad = false;
+                loadDanhMucTable();
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        async function xoaDanhMuc(id) {
+            const d = danhMucCache.find(x => x.id === id);
+            if (!confirm(`Xóa danh mục "${d ? d.tenDanhMuc : '#' + id}"?`)) return;
+            try {
+                const res = await fetch(`${API_URL}/api/danh-muc/${id}`, { method: "DELETE" });
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data.message || "Không thể xóa danh mục");
+                    return;
+                }
+                alert(data.message || "Xóa danh mục thành công!");
+                metaSachCache.daLoad = false;
+                loadDanhMucTable();
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        async function loadTheLoaiTable() {
+            const box = document.getElementById("theLoaiTable");
+            box.innerHTML = '<p style="color:#64748b;font-size:13px;">Đang tải...</p>';
+            try {
+                const res = await fetch(`${API_URL}/api/the-loai`);
+                const data = await res.json();
+                if (!res.ok) {
+                    box.innerHTML = `<p style="color:red;font-size:13px;">${escapeHtml(data.message || "Không thể tải thể loại")}</p>`;
+                    return;
+                }
+                theLoaiCache = data;
+                if (!data.length) {
+                    box.innerHTML = '<p style="color:#64748b;font-size:13px;">Chưa có thể loại nào.</p>';
+                    return;
+                }
+                box.innerHTML = `
+                    <div class="admin-table-wrap">
+                        <table class="book-list-table">
+                            <thead><tr><th>Tên thể loại</th><th>Thao tác</th></tr></thead>
+                            <tbody>
+                                ${data.map(t => `
+                                    <tr>
+                                        <td><strong>${escapeHtml(t.tenTheLoai)}</strong></td>
+                                        <td>
+                                            <div style="display:flex;gap:6px;">
+                                                <button type="button" class="btn-admin" style="background:#e0e7ff;color:#1d4ed8;" onclick="suaTheLoai(${t.id})">Sửa</button>
+                                                <button type="button" class="btn-admin" style="background:#fee2e2;color:#b91c1c;" onclick="xoaTheLoai(${t.id})">Xóa</button>
+                                            </div>
+                                        </td>
+                                    </tr>`).join("")}
+                            </tbody>
+                        </table>
+                    </div>`;
+            } catch (err) {
+                box.innerHTML = `<p style="color:red;font-size:13px;">Lỗi kết nối: ${escapeHtml(err.message)}</p>`;
+            }
+        }
+
+        function suaTheLoai(id) {
+            const t = theLoaiCache.find(x => x.id === id);
+            if (!t) return;
+            document.getElementById("tlId").value = t.id;
+            document.getElementById("tlTen").value = t.tenTheLoai || "";
+            document.getElementById("tlSubmitBtn").innerText = "Cập nhật thể loại";
+            document.getElementById("tlCancelBtn").style.display = "";
+            document.getElementById("tlTen").focus();
+        }
+
+        function huySuaTheLoai() {
+            document.getElementById("theLoaiForm").reset();
+            document.getElementById("tlId").value = "";
+            document.getElementById("tlSubmitBtn").innerText = "Thêm thể loại";
+            document.getElementById("tlCancelBtn").style.display = "none";
+        }
+
+        async function luuTheLoai(e) {
+            e.preventDefault();
+            const id = document.getElementById("tlId").value;
+            const payload = { tenTheLoai: document.getElementById("tlTen").value.trim() };
+            try {
+                const res = await fetch(id ? `${API_URL}/api/the-loai/${id}` : `${API_URL}/api/the-loai`, {
+                    method: id ? "PUT" : "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data.message || "Không thể lưu thể loại");
+                    return;
+                }
+                alert(data.message || "Lưu thể loại thành công!");
+                huySuaTheLoai();
+                metaSachCache.daLoad = false;
+                loadTheLoaiTable();
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        async function xoaTheLoai(id) {
+            const t = theLoaiCache.find(x => x.id === id);
+            if (!confirm(`Xóa thể loại "${t ? t.tenTheLoai : '#' + id}"?`)) return;
+            try {
+                const res = await fetch(`${API_URL}/api/the-loai/${id}`, { method: "DELETE" });
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data.message || "Không thể xóa thể loại");
+                    return;
+                }
+                alert(data.message || "Xóa thể loại thành công!");
+                metaSachCache.daLoad = false;
+                loadTheLoaiTable();
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // US 3.2.2 - THEO DÕI SÁCH QUÁ HẠN
+        // ─────────────────────────────────────────────────────────────
+        let quaHanCache = [];
+
+        async function loadQuaHan() {
+            const container = document.getElementById("quaHanContainer");
+            const keyword = document.getElementById("qhKeyword").value.trim();
+            container.innerHTML = '<p style="color:#64748b;">Đang tải danh sách phiếu quá hạn...</p>';
+
+            const params = new URLSearchParams();
+            if (keyword) params.append("keyword", keyword);
+
+            try {
+                const res = await fetch(`${API_URL}/api/phieu-muon/qua-han?${params.toString()}`);
+                const data = await res.json();
+
+                if (!res.ok) {
+                    container.innerHTML = `<p style="color:red;">${escapeHtml(data.message || "Không thể tải danh sách quá hạn")}</p>`;
+                    return;
+                }
+
+                adminPhieuCache = data;
+                quaHanCache = data;
+
+                if (!data.length) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="icon">✅</div>
+                            <p>Không có phiếu mượn nào quá hạn.</p>
+                        </div>`;
+                    return;
+                }
+
+                container.innerHTML = `
+                    <p style="color:#b91c1c;font-weight:600;margin-bottom:6px;">Có ${data.length} phiếu mượn quá hạn cần xử lý</p>
+                    <div class="admin-table-wrap">
+                        <table class="book-list-table">
+                            <thead>
+                                <tr>
+                                    <th>Mã phiếu</th>
+                                    <th>Độc giả</th>
+                                    <th>Email</th>
+                                    <th>Ngày mượn</th>
+                                    <th>Hạn trả</th>
+                                    <th>Quá hạn</th>
+                                    <th>Sách đang mượn</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${data.map(pm => {
+                                    const dsChuaTra = (pm.danhSachSach || []).filter(s => !s.daTra);
+                                    return `
+                                        <tr>
+                                            <td><strong>#${pm.phieuMuonId}</strong></td>
+                                            <td>
+                                                <strong style="color:#1e293b;">${escapeHtml(pm.tenDocGia || '---')}</strong><br>
+                                                <small style="color:#64748b;">${escapeHtml(pm.maTheDocGia || '')}</small>
+                                            </td>
+                                            <td>${escapeHtml(pm.emailDocGia || '---')}</td>
+                                            <td>${dinhDangNgayGio(pm.ngayMuon)}</td>
+                                            <td style="white-space:nowrap;">${escapeHtml(pm.hanTra || '---')}</td>
+                                            <td><span class="badge badge-overdue">${pm.soNgayQuaHan || 0} ngày</span></td>
+                                            <td>
+                                                ${dsChuaTra.length}
+                                                ${dsChuaTra.length ? `<br><small style="color:#64748b;">${escapeHtml(dsChuaTra.map(s => s.tenSach || s.maCuonSach || '').join(', '))}</small>` : ''}
+                                            </td>
+                                            <td>
+                                                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                                                    <button type="button" class="btn-admin" style="background:#e0e7ff;color:#1d4ed8;" onclick="openPhieuDetail(${pm.phieuMuonId})">Chi tiết</button>
+                                                    <button type="button" class="btn-admin" style="background:#173b73;color:white;" onclick="openTraSachModal(${pm.phieuMuonId})">Trả sách</button>
+                                                    <button type="button" class="btn-admin" style="background:#dcfce7;color:#15803d;" onclick="moModalGhiPhat(${pm.phieuMuonId})">💰 Ghi phạt</button>
+                                                    <button type="button" class="btn-admin" style="background:#fef3c7;color:#92400e;" onclick="guiCanhBaoPhieu(${pm.phieuMuonId})">📧 Cảnh báo</button>
+                                                </div>
+                                            </td>
+                                        </tr>`;
+                                }).join("")}
+                            </tbody>
+                        </table>
+                    </div>`;
+            } catch (err) {
+                container.innerHTML = `<p style="color:red;">Lỗi kết nối: ${escapeHtml(err.message)}</p>`;
+            }
+        }
+
+        function resetQuaHan() {
+            document.getElementById("qhKeyword").value = "";
+            loadQuaHan();
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // US 3.2.3 - PHIẾU PHẠT & EMAIL CẢNH BÁO
+        // ─────────────────────────────────────────────────────────────
+        const PHAT_MOI_NGAY = 5000;
+        let phieuPhatCache = [];
+        let danhSachPhieuChoPhat = [];
+
+        function dinhDangTien(giaTri) {
+            const so = Number(giaTri || 0);
+            return so.toLocaleString("vi-VN") + " đ";
+        }
+
+        function dinhDangThoiGian(giaTri) {
+            if (!giaTri) return "---";
+            const ngay = new Date(giaTri);
+            if (isNaN(ngay.getTime())) return escapeHtml(String(giaTri));
+            return ngay.toLocaleString("vi-VN");
+        }
+
+        async function loadPhieuPhat() {
+            const container = document.getElementById("phieuPhatContainer");
+            const keyword = document.getElementById("ppKeyword").value.trim();
+            const trangThai = document.getElementById("ppTrangThai").value;
+
+            container.innerHTML = '<p style="color:#64748b;">Đang tải danh sách phiếu phạt...</p>';
+            document.getElementById("phieuPhatTongQuan").innerHTML = "";
+
+            const params = new URLSearchParams();
+            if (keyword) params.append("keyword", keyword);
+            if (trangThai) params.append("trangThai", trangThai);
+
+            try {
+                const res = await fetch(`${API_URL}/api/phieu-phat?${params.toString()}`);
+                const data = await res.json();
+
+                if (!res.ok) {
+                    container.innerHTML = `<p style="color:red;">${escapeHtml(data.message || "Không thể tải danh sách phiếu phạt")}</p>`;
+                    return;
+                }
+
+                phieuPhatCache = data;
+
+                const dsChuaThu = data.filter(pp => pp.trangThaiThanhToan === "CHUA_THANH_TOAN");
+                const tongChuaThu = dsChuaThu.reduce((tong, pp) => tong + Number(pp.soTien || 0), 0);
+                document.getElementById("phieuPhatTongQuan").innerHTML = `
+                    <div style="display:flex;gap:24px;flex-wrap:wrap;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px 16px;font-size:13px;color:#334155;">
+                        <span>Tổng số phiếu: <strong>${data.length}</strong></span>
+                        <span>Chưa thanh toán: <strong style="color:#b91c1c;">${dsChuaThu.length}</strong></span>
+                        <span>Tổng tiền chưa thu: <strong style="color:#b91c1c;">${dinhDangTien(tongChuaThu)}</strong></span>
+                    </div>`;
+
+                if (!data.length) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="icon">💰</div>
+                            <p>Chưa có phiếu phạt nào.</p>
+                        </div>`;
+                    return;
+                }
+
+                container.innerHTML = `
+                    <div class="admin-table-wrap">
+                        <table class="book-list-table">
+                            <thead>
+                                <tr>
+                                    <th>Mã phiếu</th>
+                                    <th>Phiếu mượn</th>
+                                    <th>Độc giả</th>
+                                    <th>Số tiền</th>
+                                    <th>Lý do</th>
+                                    <th>Trạng thái</th>
+                                    <th>Ngày tạo</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${data.map(pp => {
+                                    const daThanhToan = pp.trangThaiThanhToan === "DA_THANH_TOAN";
+                                    return `
+                                        <tr>
+                                            <td><strong>#${pp.id}</strong></td>
+                                            <td>#${pp.phieuMuonId}</td>
+                                            <td>
+                                                <strong style="color:#1e293b;">${escapeHtml(pp.tenDocGia || '---')}</strong><br>
+                                                <small style="color:#64748b;">${escapeHtml(pp.maTheDocGia || '')}</small>
+                                            </td>
+                                            <td style="white-space:nowrap;"><strong style="color:#b91c1c;">${dinhDangTien(pp.soTien)}</strong></td>
+                                            <td>${escapeHtml(pp.lyDo || '---')}</td>
+                                            <td style="white-space:nowrap;">
+                                                <span class="badge ${daThanhToan ? 'badge-returned' : 'badge-pending'}">${daThanhToan ? 'Đã thanh toán' : 'Chưa thanh toán'}</span>
+                                            </td>
+                                            <td style="white-space:nowrap;">
+                                                ${dinhDangThoiGian(pp.ngayTao)}
+                                                ${pp.ngayThanhToan ? `<br><small style="color:#15803d;">Thu: ${dinhDangThoiGian(pp.ngayThanhToan)}</small>` : ''}
+                                            </td>
+                                            <td>
+                                                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                                                    <button type="button" class="btn-admin" style="background:#fef3c7;color:#92400e;" onclick="guiMailPhieuPhat(${pp.id})">📧 Gửi mail</button>
+                                                    ${daThanhToan
+                                                        ? `<button type="button" class="btn-admin" style="background:#fee2e2;color:#b91c1c;" onclick="xoaPhieuPhat(${pp.id})">🗑 Xoá</button>`
+                                                        : `<button type="button" class="btn-admin" style="background:#dcfce7;color:#15803d;" onclick="thanhToanPhieuPhat(${pp.id})">✅ Thanh toán</button>`}
+                                                </div>
+                                            </td>
+                                        </tr>`;
+                                }).join("")}
+                            </tbody>
+                        </table>
+                    </div>`;
+            } catch (err) {
+                container.innerHTML = `<p style="color:red;">Lỗi kết nối: ${escapeHtml(err.message)}</p>`;
+            }
+        }
+
+        function resetLocPhieuPhat() {
+            document.getElementById("ppKeyword").value = "";
+            document.getElementById("ppTrangThai").value = "";
+            loadPhieuPhat();
+        }
+
+        async function thanhToanPhieuPhat(id) {
+            const pp = phieuPhatCache.find(x => x.id === id);
+            const soTien = pp ? dinhDangTien(pp.soTien) : "";
+            if (!confirm(`Xác nhận đã thu ${soTien} của phiếu phạt #${id}?`)) return;
+
+            try {
+                const res = await fetch(`${API_URL}/api/phieu-phat/${id}/thanh-toan`, { method: "POST" });
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data.message || "Không thể xác nhận thanh toán");
+                    return;
+                }
+                alert(data.message || "Đã xác nhận thanh toán phiếu phạt!");
+                loadPhieuPhat();
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        async function guiMailPhieuPhat(id) {
+            const pp = phieuPhatCache.find(x => x.id === id);
+            const nguoiNhan = pp && pp.emailDocGia ? pp.emailDocGia : "độc giả";
+            if (!confirm(`Gửi mail thông báo phiếu phạt #${id} tới ${nguoiNhan}?`)) return;
+
+            try {
+                const res = await fetch(`${API_URL}/api/phieu-phat/${id}/gui-thong-bao`, { method: "POST" });
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data.message || "Không thể gửi thông báo");
+                    return;
+                }
+                alert(data.message || (data.thanhCong ? "Đã gửi thông báo." : "Gửi thông báo thất bại."));
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        async function xoaPhieuPhat(id) {
+            const pp = phieuPhatCache.find(x => x.id === id);
+            const moTa = pp
+                ? `${dinhDangTien(pp.soTien)} - ${pp.tenDocGia || "---"}`
+                : "phiếu phạt này";
+            if (!confirm(`Xoá phiếu phạt #${id} (${moTa})? Thao tác này không thể hoàn tác.`)) return;
+
+            try {
+                const res = await fetch(`${API_URL}/api/phieu-phat/${id}`, { method: "DELETE" });
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data.message || "Không thể xoá phiếu phạt");
+                    return;
+                }
+                alert(data.message || "Đã xoá phiếu phạt!");
+                loadPhieuPhat();
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        async function moModalGhiPhat(phieuMuonId) {
+            const form = document.getElementById("phieuPhatForm");
+            form.reset();
+            document.getElementById("ppPhieuMuonId").value = "";
+            document.getElementById("ppThongTinPhieu").innerHTML = "";
+            document.getElementById("ppSoTien").value = "";
+            document.getElementById("ppLyDo").value = "";
+
+            const nhomChonPhieu = document.getElementById("ppChonPhieuGroup");
+
+            if (phieuMuonId) {
+                nhomChonPhieu.style.display = "none";
+                document.getElementById("ppChonPhieu").innerHTML = "";
+                document.getElementById("ppPhieuMuonId").value = phieuMuonId;
+
+                let pm = quaHanCache.find(x => x.phieuMuonId === phieuMuonId)
+                    || adminPhieuCache.find(x => x.phieuMuonId === phieuMuonId);
+
+                if (!pm) {
+                    try {
+                        const res = await fetch(`${API_URL}/api/phieu-muon/${phieuMuonId}`);
+                        const data = await res.json();
+                        if (!res.ok) {
+                            alert(data.message || "Không thể tải thông tin phiếu mượn");
+                            return;
+                        }
+                        pm = data;
+                    } catch (err) {
+                        alert("Lỗi kết nối: " + err.message);
+                        return;
+                    }
+                }
+                dienThongTinPhieuPhat(pm);
+            } else {
+                nhomChonPhieu.style.display = "";
+                await loadDanhSachPhieuChoPhat();
+            }
+
+            document.getElementById("phieuPhatModal").classList.add("show");
+        }
+
+        function dongModalGhiPhat() {
+            document.getElementById("phieuPhatModal").classList.remove("show");
+        }
+
+        function dienThongTinPhieuPhat(pm) {
+            if (!pm) return;
+
+            const phieuMuonId = pm.phieuMuonId || pm.id;
+            document.getElementById("ppPhieuMuonId").value = phieuMuonId;
+
+            const soNgay = pm.soNgayQuaHan || 0;
+            document.getElementById("ppThongTinPhieu").innerHTML = `
+                <div style="background:#f1f5f9;border-radius:8px;padding:12px;font-size:13px;margin-bottom:14px;">
+                    <div><strong>Phiếu mượn:</strong> #${phieuMuonId}</div>
+                    <div><strong>Độc giả:</strong> ${escapeHtml(pm.tenDocGia || '---')}
+                        ${pm.maTheDocGia ? `(${escapeHtml(pm.maTheDocGia)})` : ''}</div>
+                    <div><strong>Hạn trả:</strong> ${escapeHtml(pm.hanTra || '---')}</div>
+                    ${soNgay > 0 ? `<div><strong style="color:#b91c1c;">Quá hạn:</strong> ${soNgay} ngày</div>` : ''}
+                </div>`;
+
+            if (soNgay > 0) {
+                document.getElementById("ppSoTien").value = soNgay * PHAT_MOI_NGAY;
+                document.getElementById("ppLyDo").value = `Quá hạn ${soNgay} ngày`;
+            }
+        }
+
+        async function loadDanhSachPhieuChoPhat() {
+            const select = document.getElementById("ppChonPhieu");
+            select.innerHTML = '<option value="">-- Đang tải... --</option>';
+
+            try {
+                const res = await fetch(`${API_URL}/api/phieu-muon`);
+                const data = await res.json();
+                if (!res.ok) {
+                    select.innerHTML = `<option value="">${escapeHtml(data.message || "Không tải được phiếu mượn")}</option>`;
+                    return;
+                }
+
+                danhSachPhieuChoPhat = (data || []).filter(
+                    pm => pm.trangThai === "DANG_MUON" || pm.trangThai === "DA_TRA");
+
+                if (!danhSachPhieuChoPhat.length) {
+                    select.innerHTML = '<option value="">-- Không có phiếu đang mượn / đã trả --</option>';
+                    return;
+                }
+
+                select.innerHTML = '<option value="">-- Chọn phiếu mượn --</option>' +
+                    danhSachPhieuChoPhat.map(pm =>
+                        `<option value="${pm.phieuMuonId}">#${pm.phieuMuonId} - ${escapeHtml(pm.tenDocGia || '---')} (${escapeHtml(pm.maTheDocGia || '---')}) - hạn trả ${escapeHtml(pm.hanTra || '---')}</option>`
+                    ).join("");
+            } catch (err) {
+                select.innerHTML = `<option value="">Lỗi kết nối: ${escapeHtml(err.message)}</option>`;
+            }
+        }
+
+        function chonPhieuPhatThayDoi() {
+            const id = Number(document.getElementById("ppChonPhieu").value);
+            if (!id) {
+                document.getElementById("ppPhieuMuonId").value = "";
+                document.getElementById("ppThongTinPhieu").innerHTML = "";
+                return;
+            }
+            const pm = danhSachPhieuChoPhat.find(x => x.phieuMuonId === id);
+            if (pm) dienThongTinPhieuPhat(pm);
+        }
+
+        async function submitGhiPhat(e) {
+            e.preventDefault();
+
+            const phieuMuonId = Number(document.getElementById("ppPhieuMuonId").value);
+            const soTien = Number(document.getElementById("ppSoTien").value);
+            const lyDo = document.getElementById("ppLyDo").value.trim();
+
+            if (!phieuMuonId) {
+                alert("Vui lòng chọn phiếu mượn cần ghi phạt.");
+                return;
+            }
+            if (!soTien || soTien <= 0) {
+                alert("Số tiền phạt phải lớn hơn 0.");
+                return;
+            }
+            if (!lyDo) {
+                alert("Vui lòng nhập lý do phạt.");
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API_URL}/api/phieu-phat`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ phieuMuonId, soTien, lyDo })
+                });
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data.message || "Không thể ghi nhận phiếu phạt");
+                    return;
+                }
+
+                alert(data.message || "Ghi nhận phiếu phạt thành công!");
+                dongModalGhiPhat();
+                loadPhieuPhat();
+                if (document.getElementById("tabQuaHan").classList.contains("active")) {
+                    loadQuaHan();
+                }
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        async function guiCanhBaoPhieu(phieuMuonId) {
+            if (!confirm(`Gửi email cảnh báo quá hạn cho phiếu #${phieuMuonId}?`)) return;
+
+            try {
+                const res = await fetch(`${API_URL}/api/phieu-muon/${phieuMuonId}/gui-canh-bao`, { method: "POST" });
+                const data = await res.json();
+                if (!res.ok) {
+                    alert(data.message || "Không thể gửi cảnh báo");
+                    return;
+                }
+                alert(data.message || (data.thanhCong ? "Đã gửi cảnh báo." : "Gửi cảnh báo thất bại."));
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        async function guiCanhBaoTatCa() {
+            const dsId = quaHanCache.map(pm => pm.phieuMuonId);
+            const cauHoi = dsId.length
+                ? `Gửi email cảnh báo cho ${dsId.length} độc giả đang quá hạn?`
+                : "Gửi email cảnh báo cho toàn bộ phiếu đang quá hạn?";
+
+            if (!confirm(cauHoi)) return;
+
+            try {
+                const res = await fetch(`${API_URL}/api/phieu-muon/gui-canh-bao`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(dsId)
+                });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    alert(data.message || "Không thể gửi cảnh báo");
+                    return;
+                }
+
+                let thongBao = `Đã gửi ${data.thanhCong}/${data.tongSo} email cảnh báo.`;
+                if (data.thatBai) {
+                    const loiDauTien = (data.chiTiet || [])
+                        .filter(x => !x.thanhCong)
+                        .slice(0, 3)
+                        .map(x => `#${x.phieuMuonId}: ${x.message}`)
+                        .join("\n");
+                    thongBao += `\n${data.thatBai} phiếu thất bại.` + (loiDauTien ? `\n${loiDauTien}` : "");
+                }
+                alert(thongBao);
+            } catch (err) {
+                alert("Lỗi kết nối: " + err.message);
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // THÔNG BÁO / CẢNH BÁO PHÍA NGƯỜI DÙNG
+        // ─────────────────────────────────────────────────────────────
+        let thongBaoCache = [];
+
+        function khoaDaDocThongBao() {
+            return `thongBaoDaDoc_${currentUser ? currentUser.id : "guest"}`;
+        }
+
+        function layDsDaDocThongBao() {
+            try {
+                const raw = localStorage.getItem(khoaDaDocThongBao());
+                const ds = raw ? JSON.parse(raw) : [];
+                return Array.isArray(ds) ? ds : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function luuDsDaDocThongBao(ds) {
+            localStorage.setItem(khoaDaDocThongBao(), JSON.stringify(ds));
+        }
+
+        function capNhatBadgeThongBao() {
+            const badge = document.getElementById("thongBaoBadge");
+            if (!badge) return;
+            const daDoc = new Set(layDsDaDocThongBao());
+            const chuaDoc = thongBaoCache.filter(tb => !daDoc.has(tb.id)).length;
+            badge.textContent = chuaDoc;
+            badge.style.display = chuaDoc > 0 ? "inline-block" : "none";
+        }
+
+        async function capNhatBadgeThongBaoTuServer() {
+            if (!currentUser) return;
+            try {
+                const res = await fetch(`${API_URL}/api/thong-bao/nguoi-dung/${currentUser.id}`);
+                const data = await res.json();
+                if (!res.ok) return;
+                thongBaoCache = Array.isArray(data) ? data : [];
+                capNhatBadgeThongBao();
+            } catch (e) {
+                // Im lặng nếu API lỗi, không làm phiền người dùng.
+            }
+        }
+
+        async function loadThongBao() {
+            const container = document.getElementById("thongBaoContainer");
+            const tomTat = document.getElementById("thongBaoTomTat");
+            container.innerHTML = '<p style="color:#64748b;">Đang tải thông báo...</p>';
+            tomTat.innerText = "";
+
+            try {
+                const res = await fetch(`${API_URL}/api/thong-bao/nguoi-dung/${currentUser.id}`);
+                const data = await res.json();
+
+                if (!res.ok) {
+                    container.innerHTML = `<p style="color:red;">${escapeHtml(data.message || "Không thể tải thông báo")}</p>`;
+                    return;
+                }
+
+                thongBaoCache = Array.isArray(data) ? data : [];
+                const daDoc = new Set(layDsDaDocThongBao());
+                const chuaDoc = thongBaoCache.filter(tb => !daDoc.has(tb.id)).length;
+                capNhatBadgeThongBao();
+
+                tomTat.innerText = thongBaoCache.length
+                    ? `Bạn có ${chuaDoc} thông báo chưa đọc trên tổng ${thongBaoCache.length}.`
+                    : "";
+
+                if (!thongBaoCache.length) {
+                    container.innerHTML = `
+                        <div class="empty-state">
+                            <div class="icon">✅</div>
+                            <p>Không có cảnh báo nào. Bạn đang dùng thư viện rất đúng hạn!</p>
+                        </div>`;
+                    return;
+                }
+
+                container.innerHTML = `
+                    <div style="display:flex;flex-direction:column;gap:10px;">
+                        ${thongBaoCache.map(tb => {
+                            const docRoi = daDoc.has(tb.id);
+                            const mau = tb.mucDo === "CAO" ? "#dc2626" : "#f59e0b";
+                            return `
+                                <div style="background:${docRoi ? "#f8fafc" : "#ffffff"};border:1px solid #e2e8f0;border-left:4px solid ${mau};border-radius:8px;padding:12px 14px;display:flex;justify-content:space-between;gap:12px;align-items:flex-start;${docRoi ? "opacity:.7;" : ""}">
+                                    <div style="min-width:0;">
+                                        <div style="font-weight:600;color:#1e293b;margin-bottom:4px;">
+                                            ${escapeHtml(tb.tieuDe)}
+                                            ${docRoi ? "" : '<span class="badge badge-overdue" style="font-size:10px;padding:3px 8px;margin-left:6px;">Mới</span>'}
+                                        </div>
+                                        <div style="font-size:13px;color:#475569;white-space:pre-line;">${escapeHtml(tb.noiDung)}</div>
+                                        ${tb.ngay ? `<div style="font-size:12px;color:#94a3b8;margin-top:6px;">${escapeHtml(tb.ngay)}</div>` : ""}
+                                    </div>
+                                    <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0;">
+                                        ${tb.thamChieu ? `<button type="button" class="btn-admin" style="background:#e0e7ff;color:#1d4ed8;" onclick="xuLyThongBao('${tb.id}', '${tb.thamChieu}')">Xem</button>` : ""}
+                                        ${docRoi ? "" : `<button type="button" class="btn-admin" style="background:#e2e8f0;color:#334155;" onclick="danhDauMotThongBao('${tb.id}')">Đã đọc</button>`}
+                                    </div>
+                                </div>`;
+                        }).join("")}
+                    </div>`;
+            } catch (err) {
+                container.innerHTML = `<p style="color:red;">Lỗi kết nối: ${escapeHtml(err.message)}</p>`;
+            }
+        }
+
+        function danhDauMotThongBao(id) {
+            const ds = layDsDaDocThongBao();
+            if (!ds.includes(id)) {
+                ds.push(id);
+                luuDsDaDocThongBao(ds);
+            }
+            capNhatBadgeThongBao();
+            loadThongBao();
+        }
+
+        function danhDauTatCaThongBao() {
+            if (!thongBaoCache.length) return;
+            luuDsDaDocThongBao(thongBaoCache.map(tb => tb.id));
+            loadThongBao();
+        }
+
+        function xuLyThongBao(id, thamChieu) {
+            const ds = layDsDaDocThongBao();
+            if (!ds.includes(id)) {
+                ds.push(id);
+                luuDsDaDocThongBao(ds);
+            }
+            capNhatBadgeThongBao();
+
+            if (thamChieu === "LICH_SU") {
+                switchTab("history");
+            } else if (thamChieu === "QUA_HAN") {
+                switchTab("quaHan");
+            } else {
+                loadThongBao();
+            }
+        }
+
+        // Tự động load sách đề xuất khi mở trang
+        loadSuggestedBooks();
+        capNhatBadgeThongBaoTuServer();
+    </script>
+
+    <!-- Modal Ghi nhận phiếu phạt (US 3.2.3) -->
+    <div id="phieuPhatModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 style="font-size: 16px;">💰 Ghi nhận phiếu phạt</h3>
+                <button onclick="dongModalGhiPhat()" style="background: transparent; border: none; color: white; font-size: 20px; cursor: pointer;">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="phieuPhatForm" onsubmit="submitGhiPhat(event)">
+                    <input type="hidden" id="ppPhieuMuonId">
+                    <div class="form-group" id="ppChonPhieuGroup">
+                        <label>Phiếu mượn *</label>
+                        <select id="ppChonPhieu" onchange="chonPhieuPhatThayDoi()"></select>
+                    </div>
+                    <div id="ppThongTinPhieu"></div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Số tiền phạt (đ) *</label>
+                            <input type="number" id="ppSoTien" min="1" step="1" placeholder="VD: 50000" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Lý do phạt *</label>
+                            <input type="text" id="ppLyDo" maxlength="255" placeholder="VD: Quá hạn 5 ngày / Sách bị hỏng" required>
+                        </div>
+                    </div>
+                    <button type="submit" style="background: #16a34a; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 4px;">Xác nhận ghi phạt</button>
+                    <p style="font-size: 12px; color: #64748b; margin-top: 10px;">Gợi ý: 5.000đ/ngày quá hạn. Mức phạt do thủ thư quyết định và có thể sửa lại.</p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Chỉnh sửa Sách (US 2.2.2) -->
+    <div id="bookEditModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 style="font-size: 16px;">✏️ Chỉnh sửa đầu sách</h3>
+                <button onclick="closeBookEdit()" style="background: transparent; border: none; color: white; font-size: 20px; cursor: pointer;">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editBookForm" onsubmit="submitEditBook(event)">
+                    <input type="hidden" id="editBookId">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Mã sách (không đổi)</label>
+                            <input type="text" id="editMaSach" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Tên sách *</label>
+                            <input type="text" id="editTenSach" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Năm xuất bản</label>
+                            <input type="number" id="editNamXuatBan">
+                        </div>
+                        <div class="form-group">
+                            <label>Nhà xuất bản</label>
+                            <select id="editNhaXuatBan"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Danh mục</label>
+                            <select id="editDanhMuc"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tác giả</label>
+                            <select id="editTacGia"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Thể loại</label>
+                            <select id="editTheLoai"></select>
+                        </div>
+                        <div class="form-group full">
+                            <label>Mô tả sách</label>
+                            <textarea id="editMoTa" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <button type="submit" style="background: #173b73; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 10px;">Lưu thay đổi</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Người dùng -->
+    <div id="userModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="userModalTitle" style="font-size: 16px;">Cập nhật thông tin</h3>
+                <button onclick="closeUserModal()" style="background: transparent; border: none; color: white; font-size: 20px; cursor: pointer;">&times;</button>
+            </div>
+            <div class="modal-body" id="userModalBody"></div>
+            <div class="modal-footer">
+                <button class="btn-close" onclick="closeUserModal()">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Chi tiết Sách -->
+    <div id="bookModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 style="font-size: 16px;">Chi tiết sách</h3>
+                <button onclick="closeModal()" style="background: transparent; border: none; color: white; font-size: 20px; cursor: pointer;">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBookBody"></div>
+            <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
+                <button id="btnMuonOnline" class="btn-detail" style="background: #2563eb; color: white; width: auto; padding: 8px 20px; margin: 0;" onclick="muonOnline()">Mượn online</button>
+                <button class="btn-close" onclick="closeModal()">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

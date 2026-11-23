@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký tài khoản - Thư Viện trường X</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: #e9eef6;
+        }
+
+        .register-box {
+            width: 480px;
+        }
+
+        .alert {
+            display: none;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .input-group {
+            margin-bottom: 14px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 11px 13px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            outline: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        input:focus {
+            border-color: #173b73;
+            box-shadow: 0 0 0 3px rgba(23, 59, 115, 0.15);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #173b73;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #234f94;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .otp-hint {
+            background: #eef2ff;
+            border: 1px solid #c7d2fe;
+            color: #3730a3;
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            line-height: 1.5;
+            margin-bottom: 14px;
+            white-space: pre-line;
+        }
+
+        .otp-input {
+            text-align: center;
+            font-size: 26px;
+            letter-spacing: 10px;
+            font-weight: 700;
+            padding-left: 18px;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #334155;
+            margin-top: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .login-link a {
+            color: #173b73;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <link rel="stylesheet" href="styles.css">
+    <script src="password-toggle.js" defer></script>
+</head>
+
+<body>
+
+    <div class="register-box">
+        <header class="auth-header">
+            <div class="auth-logo" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 7.3C10.6 5.9 8.6 5.2 5.2 5.2v13.1c3.4 0 5.4.7 6.8 2.1 1.4-1.4 3.4-2.1 6.8-2.1V5.2c-3.4 0-5.4.7-6.8 2.1Z" />
+                    <path d="M12 7.3v13.1" />
+                </svg>
+            </div>
+            <div class="auth-titles">
+                <h1 class="auth-brand">Thư Viện trường X</h1>
+                <p class="auth-function">Đăng ký tài khoản độc giả</p>
+            </div>
+        </header>
+
+        <div id="alertBox" class="alert"></div>
+
+        <form id="registerForm" onsubmit="handleRegister(event)">
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Mã sinh viên *</label>
+                    <input type="text" id="ma_sv" placeholder="SV001" required>
+                </div>
+                <div class="input-group">
+                    <label>Họ và tên *</label>
+                    <input type="text" id="ho_ten" placeholder="Nguyễn Văn A" required>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Email sinh viên *</label>
+                <input type="email" id="email" placeholder="sv@student.com" required>
+            </div>
+
+            <div class="input-group">
+                <label for="mat_khau">Mật khẩu *</label>
+                <div class="input-password">
+                    <input type="password" id="mat_khau" placeholder="Tối thiểu 6 ký tự" required>
+                    <button type="button" class="toggle-password" aria-label="Hiện mật khẩu" aria-pressed="false">
+                        <svg class="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                        <svg class="icon-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M3 3l18 18" />
+                            <path d="M10.6 6.1A11 11 0 0 1 12 6c6.4 0 10 6 10 6a17.7 17.7 0 0 1-3.2 3.9" />
+                            <path d="M6.7 6.7A17.6 17.6 0 0 0 2 12s3.6 6 10 6c1.5 0 2.9-.3 4.1-.8" />
+                            <path d="M9.9 9.9a3 3 0 0 0 4.2 4.2" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="input-group">
+                    <label>Lớp</label>
+                    <input type="text" id="lop" placeholder="CNTT01">
+                </div>
+                <div class="input-group">
+                    <label>Khoa</label>
+                    <input type="text" id="khoa" placeholder="Công nghệ thông tin">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Số điện thoại</label>
+                <input type="text" id="sdt" placeholder="0912345678">
+            </div>
+
+            <button type="submit" id="btnSubmit">ĐĂNG KÝ TÀI KHOẢN</button>
+        </form>
+
+        <!-- BƯỚC 2: XÁC THỰC EMAIL BẰNG OTP -->
+        <div id="otpStep" style="display: none;">
+            <div class="otp-hint" id="otpHint"></div>
+            <div class="input-group">
+                <label>Mã OTP (6 chữ số) *</label>
+                <input type="text" id="otpCode" class="otp-input" inputmode="numeric" maxlength="6"
+                    placeholder="------" autocomplete="one-time-code"
+                    onkeydown="if (event.key === 'Enter') { event.preventDefault(); xacNhanOtp(); }">
+            </div>
+            <button type="button" id="btnXacNhanOtp" onclick="xacNhanOtp()">XÁC NHẬN MÃ OTP</button>
+            <button type="button" id="btnGuiLaiOtp" class="btn-secondary" onclick="guiLaiOtp()">GỬI LẠI MÃ</button>
+            <button type="button" id="btnQuayLai" class="btn-secondary" onclick="quayLaiDangKy()">← QUAY LẠI CHỈNH SỬA</button>
+        </div>
+
+        <div class="login-link">
+            Đã có tài khoản?
+            <a href="giaodienđnhap.html">Đăng nhập ngay</a>
+        </div>
+    </div>
+
+    <script>
+        // Dùng đường dẫn tương đối: nginx proxy /api sang backend
+        const API_URL = "/api/users";
+
+        let dangKyPayload = null;
+        let otpEmail = "";
+        let soLanGuiLaiConLai = 1;
+        let demNguocTimer = null;
+        let cooldownUntil = 0;
+
+        function hienThiAlert(message, thanhCong) {
+            const alertBox = document.getElementById("alertBox");
+            alertBox.innerText = message;
+            alertBox.className = "alert show " + (thanhCong ? "alert-success" : "alert-error");
+        }
+
+        function hienThiBuocOtp(hienThi) {
+            document.getElementById("registerForm").style.display = hienThi ? "none" : "block";
+            document.getElementById("otpStep").style.display = hienThi ? "block" : "none";
+        }
+
+        function chuyenSangBuocOtp(data) {
+            soLanGuiLaiConLai = data.soLanGuiLaiConLai != null ? data.soLanGuiLaiConLai : 1;
+
+            const hint = document.getElementById("otpHint");
+            hint.textContent = "Mã OTP đã được gửi tới email:\n"
+                + (data.email || otpEmail)
+                + `\nMã có hiệu lực ${Math.round((data.hetHanGiay || 300) / 60)} phút. `
+                + "Nhập mã 6 chữ số trong email để hoàn tất đăng ký.\n"
+                + "Nếu email không đúng, bấm \"Quay lại chỉnh sửa\".";
+
+            document.getElementById("otpCode").value = "";
+            hienThiBuocOtp(true);
+            document.getElementById("otpCode").focus();
+
+            hienThiAlert(
+                `Đã gửi mã OTP tới ${data.email || otpEmail}. Vui lòng kiểm tra email (cả mục Thư rác).`,
+                true
+            );
+            batDauDemNguoc(data.cooldownGiay || 60);
+        }
+
+        function capNhatNutGuiLai() {
+            const btn = document.getElementById("btnGuiLaiOtp");
+            const conLai = Math.max(0, Math.ceil((cooldownUntil - Date.now()) / 1000));
+
+            if (soLanGuiLaiConLai <= 0) {
+                btn.disabled = true;
+                btn.innerText = "ĐÃ HẾT LƯỢT GỬI LẠI";
+            } else if (conLai > 0) {
+                btn.disabled = true;
+                btn.innerText = `GỬI LẠI MÃ (${conLai}s)`;
+            } else {
+                btn.disabled = false;
+                btn.innerText = "GỬI LẠI MÃ (còn 1 lần)";
+            }
+        }
+
+        function batDauDemNguoc(giay) {
+            clearInterval(demNguocTimer);
+            cooldownUntil = Date.now() + giay * 1000;
+            capNhatNutGuiLai();
+            demNguocTimer = setInterval(() => {
+                capNhatNutGuiLai();
+                if (Date.now() >= cooldownUntil) {
+                    clearInterval(demNguocTimer);
+                }
+            }, 500);
+        }
+
+        async function handleRegister(event) {
+            event.preventDefault();
+            const btnSubmit = document.getElementById("btnSubmit");
+
+            const payload = {
+                ma_sv: document.getElementById("ma_sv").value.trim(),
+                ho_ten: document.getElementById("ho_ten").value.trim(),
+                email: document.getElementById("email").value.trim(),
+                mat_khau: document.getElementById("mat_khau").value,
+                lop: document.getElementById("lop").value.trim(),
+                khoa: document.getElementById("khoa").value.trim(),
+                sdt: document.getElementById("sdt").value.trim()
+            };
+
+            btnSubmit.disabled = true;
+            btnSubmit.innerText = "Đang gửi mã OTP...";
+
+            try {
+                const response = await fetch(`${API_URL}/dangky/gui-otp`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    dangKyPayload = payload;
+                    otpEmail = data.email || payload.email;
+                    chuyenSangBuocOtp(data);
+                } else {
+                    hienThiAlert(data.message || "Không gửi được mã OTP. Vui lòng thử lại!", false);
+                }
+            } catch (err) {
+                hienThiAlert("Không thể kết nối đến backend (" + err.message + ")", false);
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.innerText = "ĐĂNG KÝ TÀI KHOẢN";
+            }
+        }
+
+        async function guiLaiOtp() {
+            if (!dangKyPayload) return;
+
+            const btn = document.getElementById("btnGuiLaiOtp");
+            btn.disabled = true;
+            btn.innerText = "Đang gửi lại...";
+
+            try {
+                const response = await fetch(`${API_URL}/dangky/gui-otp`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(dangKyPayload)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    soLanGuiLaiConLai = data.soLanGuiLaiConLai != null ? data.soLanGuiLaiConLai : 0;
+                    otpEmail = data.email || otpEmail;
+
+                    document.getElementById("otpHint").textContent =
+                        "Đã gửi mã OTP mới tới email:\n"
+                        + (data.email || otpEmail)
+                        + "\nMã cũ không còn hiệu lực. Vui lòng dùng mã mới.";
+                    document.getElementById("otpCode").value = "";
+                    document.getElementById("otpCode").focus();
+
+                    hienThiAlert("Đã gửi lại mã OTP. Vui lòng kiểm tra email.", true);
+                    batDauDemNguoc(data.cooldownGiay || 60);
+                } else {
+                    hienThiAlert(data.message || "Không gửi lại được mã OTP!", false);
+                    capNhatNutGuiLai();
+                }
+            } catch (err) {
+                hienThiAlert("Không thể kết nối đến backend (" + err.message + ")", false);
+                capNhatNutGuiLai();
+            }
+        }
+
+        async function xacNhanOtp() {
+            if (!dangKyPayload) return;
+
+            const otp = document.getElementById("otpCode").value.trim();
+            if (!/^\d{6}$/.test(otp)) {
+                hienThiAlert("Vui lòng nhập đủ 6 chữ số của mã OTP.", false);
+                return;
+            }
+
+            const btn = document.getElementById("btnXacNhanOtp");
+            btn.disabled = true;
+            btn.innerText = "Đang xác nhận...";
+            let daThanhCong = false;
+
+            try {
+                const response = await fetch(`${API_URL}/dangky/xac-nhan`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ email: otpEmail, otp: otp })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    daThanhCong = true;
+                    clearInterval(demNguocTimer);
+                    btn.innerText = "XÁC NHẬN THÀNH CÔNG";
+                    hienThiAlert("Đăng ký thành công! Đang chuyển hướng về trang đăng nhập...", true);
+                    setTimeout(() => {
+                        window.location.href = "giaodienđnhap.html";
+                    }, 1500);
+                    return;
+                }
+
+                const thongBao = data.message || "Xác nhận OTP thất bại!";
+                hienThiAlert(thongBao, false);
+                if (/hết hạn|đăng ký lại|nhập sai quá/i.test(thongBao)) {
+                    datLaiVeFormDangKy();
+                } else {
+                    document.getElementById("otpCode").select();
+                }
+            } catch (err) {
+                hienThiAlert("Không thể kết nối đến backend (" + err.message + ")", false);
+            } finally {
+                if (!daThanhCong) {
+                    btn.disabled = false;
+                    btn.innerText = "XÁC NHẬN MÃ OTP";
+                }
+            }
+        }
+
+        function datLaiVeFormDangKy() {
+            clearInterval(demNguocTimer);
+            cooldownUntil = 0;
+            soLanGuiLaiConLai = 1;
+            dangKyPayload = null;
+            otpEmail = "";
+            document.getElementById("otpCode").value = "";
+            document.getElementById("otpHint").textContent = "";
+            hienThiBuocOtp(false);
+        }
+
+        async function quayLaiDangKy() {
+            if (!confirm("Quay lại sẽ hủy mã OTP đã gửi. Bạn có chắc không?")) return;
+
+            const email = otpEmail || (dangKyPayload && dangKyPayload.email);
+            if (email) {
+                try {
+                    await fetch(`${API_URL}/dangky/huy`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ email: email })
+                    });
+                } catch (err) {
+                    // Không chặn việc quay lại nếu gọi hủy thất bại
+                }
+            }
+
+            datLaiVeFormDangKy();
+            hienThiAlert("Đã hủy xác thực. Bạn có thể chỉnh sửa thông tin và đăng ký lại.", false);
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: library_db
+    environment:
+      - POSTGRES_DB=quan_ly_thu_vien
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-YourStrong@Passw0rd}
+      # Đảm bảo psql đọc đúng tiếng Việt trong file .sql
+      - PGCLIENTENCODING=UTF8
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Script chỉ chạy khi volume còn trống (lần đầu dựng DB).
+      # Nhờ vậy không bị lỗi trùng khoá như khi chạy lại service db-init.
+      - ./database/create_postSQL.sql:/docker-entrypoint-initdb.d/01-create.sql:ro
+      - ./database/insert_postgreSQL.sql:/docker-entrypoint-initdb.d/02-insert.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d quan_ly_thu_vien"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    restart: unless-stopped
+    networks:
+      - library_net
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: library_backend
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/quan_ly_thu_vien
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD:-YourStrong@Passw0rd}
+      - SPRING_MAIL_USERNAME=${SPRING_MAIL_USERNAME:-xuannv2006pt@gmail.com}
+      - SPRING_MAIL_PASSWORD=${SPRING_MAIL_PASSWORD:-csdfgglcsknkljvs}
+      # URL tương đối: backend tự ghép theo domain mà trình duyệt đang dùng
+      - APP_FRONTEND_LOGIN_URL=/giaodienđnhap.html
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - library_net
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: library_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - library_net
+
+  # Cloudflare Quick Tunnel: đưa web ra Internet qua HTTPS, không cần mở port.
+  # Link công khai xem bằng: docker compose logs -f tunnel
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: library_tunnel
+    command: tunnel --no-autoupdate --url http://frontend:80
+    depends_on:
+      - frontend
+    restart: unless-stopped
+    networks:
+      - library_net
+
+volumes:
+  postgres_data:
+
+networks:
+  library_net:
+    driver: bridge
